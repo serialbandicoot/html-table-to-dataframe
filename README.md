@@ -31,3 +31,40 @@ const data = [
 ];
 
 await toTable(data);
+
+### `toDataFrame`
+
+Converts an HTML table into an array of objects where each object represents a row of the table.
+
+**Parameters:**
+
+- `html: string`: The HTML string representing the table.
+- `headers: string[]`: An array of strings representing the column headers. The order of headers determines the keys in the resulting objects.
+
+**Returns:**
+
+- `Promise<{ [key: string]: string }[] | null>`: A promise that resolves to an array of objects. Each object contains key-value pairs where the keys are column headers and the values are the corresponding cell contents. If the HTML is invalid or no data is found, it resolves to `null`.
+
+**Usage:**
+
+```typescript
+import { toDataFrame } from 'html-table-to-dataframe';
+import { promises as fs } from 'fs';
+import { join } from 'path';
+
+const headers: string[] = ["Person", "Likes", "Age"];
+const filePath = join(__dirname, 'data', 'table1.html');
+const htmlString = await fs.readFile(filePath, 'utf-8');
+
+const dataFrame = await toDataFrame(htmlString, headers);
+
+console.log(dataFrame);
+
+┌─────────┬──────────────────────┬─────┐
+│ Person  │ Likes                │ Age │
+├─────────┼──────────────────────┼─────┤
+│ Chris   │ HTML tables          │ 22  │
+│ Dennis  │ Web accessibility    │ 45  │
+│ Sarah   │ JavaScript frameworks│ 29  │
+│ Karen   │ Web performance      │ 36  │
+└─────────┴──────────────────────┴─────┘
