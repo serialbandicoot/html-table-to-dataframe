@@ -1,4 +1,4 @@
-import { toDataFrame, toTable } from '../index';
+import { toDataFrame, prettyPrint } from '../index';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 
@@ -34,14 +34,13 @@ test('should convert data frame to pretty table and output correct format', asyn
   const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
 
   // Act
-  await toTable(dataFrame);
+  await prettyPrint(dataFrame);
 
   // Assert
-  // Ensure that console.log is called with the expected content
   expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Person'));
   expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Likes'));
   expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Age'));
 
-  // Restore the original console.log method
+  // Restore console.log
   logSpy.mockRestore();
 });

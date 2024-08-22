@@ -6,7 +6,7 @@ import Table from 'cli-table3';
  * @param table - An array of objects where each object has string keys 
  * and string values, or null if no data is available.
  */
-export async function toTable(
+export async function prettyPrint(
   table: { [key: string]: string }[] | null
 ) {
   // Handle the case where table is null
@@ -36,6 +36,8 @@ export async function toTable(
 
   // Print the table
   console.log(tableInstance.toString());
+  
+  return tableInstance;
 }
 
 export async function toDataFrame(
