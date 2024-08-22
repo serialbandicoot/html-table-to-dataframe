@@ -42,20 +42,19 @@
   },
   "homepage": "https://github.com/serialbandicoot/html-table-to-dataframe#readme",
   "devDependencies": {
-    "typescript": "^5.1.6",
-    "eslint": "^8.46.0",
     "@typescript-eslint/eslint-plugin": "^6.3.0",
     "@typescript-eslint/parser": "^6.3.0",
+    "eslint": "^8.46.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "jest": "^29.7.0",
     "prettier": "^3.0.1",
-    "jest": "^29.6.2",
-    "@types/jest": "^29.6.2",
+    "release-it": "^17.0.0",
     "ts-jest": "^29.0.0",
-    "release-it": "^17.0.0"
+    "typescript": "^5.1.6"
   },
   "dependencies": {
-    "jsdom": "^20.0.0",
-    "cli-table3": "^0.6.0"
+    "cli-table3": "^0.6.0",
+    "jsdom": "^20.0.0"
   }
 }
