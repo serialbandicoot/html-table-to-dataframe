@@ -9,4 +9,6 @@ module.exports = {
   roots: ['<rootDir>/src/test'], // Corrected this line
   testMatch: ['**/?(*.)+(spec|test).[tj]s?(x)'], // Match your test files
   clearMocks: true,
+  collectCoverage: true,
+  coverageDirectory: 'coverage',
 };
