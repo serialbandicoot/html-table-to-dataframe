@@ -34,6 +34,7 @@ await toTable(data);
 ```
 ### In Print
 
+```typescript
 ┌─────────┬──────────────────────┬─────┐
 │ Person  │ Likes                │ Age │
 ├─────────┼──────────────────────┼─────┤
@@ -42,6 +43,7 @@ await toTable(data);
 │ Sarah   │ JavaScript frameworks│ 29  │
 │ Karen   │ Web performance      │ 36  │
 └─────────┴──────────────────────┴─────┘
+```
 
 ### `toDataFrame`
 
