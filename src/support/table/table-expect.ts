@@ -1,4 +1,4 @@
-import { Nullable } from "../types";
+import { Nullable } from '../types';
 
 /**
  *  expectTableRowCountToBeGreaterThan expects a tableData as processed by convertHTMLTable.
@@ -98,7 +98,7 @@ export const expectColumnValuesToBeNumbers = (tableData: { [key: string]: string
 
     // Check conversion, check type and check against
     // original, for example 1e will be converted to 1.
-    if (!isNaN(parsedValue) && typeof parsedValue === "number" && parsedValue.toString() !== row[columnHeader]) {
+    if (!isNaN(parsedValue) && typeof parsedValue === 'number' && parsedValue.toString() !== row[columnHeader]) {
       throw new Error(`Column header "${columnHeader}" with value "${row[columnHeader]}" is not a number`);
     }
   }
@@ -128,15 +128,15 @@ export const expectColumnToMatchWhenFilteredBy = (
   filterValue: Nullable<string>,
 ) => {
   if (!targetValue) {
-    throw new Error("Target value cannot be undefined!");
+    throw new Error('Target value cannot be undefined!');
   }
 
   if (!filterValue) {
-    throw new Error("Expect cannot be undefined!");
+    throw new Error('Expect cannot be undefined!');
   }
 
   if (!tableData) {
-    throw new Error("DataTable cannot be undefined!");
+    throw new Error('DataTable cannot be undefined!');
   }
 
   const targetCheck = tableData.filter((item) => item[filterColumn] === filterValue);
@@ -150,10 +150,8 @@ export const expectColumnToMatchWhenFilteredBy = (
 
   const filteredTarget = targetCheck.filter((item) => item[targetColumn] === targetValue);
   if (filteredTarget.length === 0) {
-    const mappedItems = tableData.map((i) => i[targetColumn]).join(", ");
-    throw new Error(
-      `Column header "${targetColumn}" with value "${targetValue}" does not match items (${mappedItems})!"`,
-    );
+    const mappedItems = tableData.map((i) => i[targetColumn]).join(', ');
+    throw new Error(`Column header "${targetColumn}" with value "${targetValue}" does not match items (${mappedItems})!"`);
   }
 };
 
@@ -195,7 +193,7 @@ export const expectColumnToMatchGroupWhenFilteredBy = (
 ) => {
   filterGroup.forEach((item) => {
     if (!item.filterValue) {
-      throw new Error("Value cannot be undefined!");
+      throw new Error('Value cannot be undefined!');
     }
 
     expectColumnToMatchWhenFilteredBy(tableData, targetColumn, targetValue, item.filterColumn, item.filterValue);
@@ -225,11 +223,11 @@ export const expectColumnToNotMatch = (
   targetValue: string | undefined,
 ) => {
   if (!tableData) {
-    throw new Error("DataTable cannot be undefined!");
+    throw new Error('DataTable cannot be undefined!');
   }
 
   if (!targetValue) {
-    throw new Error("Target value cannot be undefined!");
+    throw new Error('Target value cannot be undefined!');
   }
 
   const targetCheck = tableData.find((item) => item[targetColumn] === targetValue);
@@ -303,7 +301,7 @@ export const expectColumnGroupToBeValue = (tableData: { [key: string]: string }[
   }
   filterGroup.forEach((item) => {
     if (item.filterValue === undefined || item.filterValue === null) {
-      throw new Error(`Value of ${item.filterValue ?? ""} for ${item.filterColumn} cannot be null or undefined`);
+      throw new Error(`Value of ${item.filterValue ?? ''} for ${item.filterColumn} cannot be null or undefined`);
     }
     expectColumnToBeValue(tableData, item.filterColumn, item.filterValue);
   });
@@ -319,12 +317,9 @@ export const expectColumnGroupToBeValue = (tableData: { [key: string]: string }[
  * See expectColumnGroupToBeValue
  */
 
-export const expectColumnGroupToBeValues = (
-  tableData: { [key: string]: string }[] | null,
-  filterGroups: GroupType[][],
-) => {
+export const expectColumnGroupToBeValues = (tableData: { [key: string]: string }[] | null, filterGroups: GroupType[][]) => {
   if (tableData === null || tableData.length === 0 || tableData.length !== filterGroups.length) {
-    throw new Error("Table data and filterGroups must be equal and not empty");
+    throw new Error('Table data and filterGroups must be equal and not empty');
   }
   filterGroups.forEach((filterGroup, index) => {
     expectColumnGroupToBeValue([tableData[index]], [filterGroup[index]]);
@@ -353,7 +348,7 @@ export const expectTableToNotMatch = (
   tableData2: { [key: string]: string }[] | null,
 ) => {
   if (!tableData1 || !tableData2) {
-    throw new Error("Table data cannot be null");
+    throw new Error('Table data cannot be null');
   }
 
   if (tableData1.length !== tableData2.length) {
@@ -369,9 +364,9 @@ export const expectTableToNotMatch = (
       .map((obj) =>
         Object.entries(obj)
           .map(([key, value]) => `${key}: ${value}`)
-          .join(""),
+          .join(''),
       )
-      .join("");
+      .join('');
   };
 
   expect(tableAsString(tableData1)).not.toEqual(tableAsString(tableData2));

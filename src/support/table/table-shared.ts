@@ -7,9 +7,9 @@ import { JSDOM } from 'jsdom';
  */
 
 export const getLocatorByIndex = async (dom: JSDOM, rowIndex: number) => {
-  const tbodyElements = dom.window.document.querySelectorAll("tbody");
+  const tbodyElements = dom.window.document.querySelectorAll('tbody');
   let rowCount = 0;
-  tbodyElements.forEach(tbody => {
+  tbodyElements.forEach((tbody) => {
     const rows = tbody.querySelectorAll('tr');
     rowCount += rows.length;
   });
@@ -18,7 +18,7 @@ export const getLocatorByIndex = async (dom: JSDOM, rowIndex: number) => {
     throw new Error(`Row Index is greater than table rows (${rowCount})`);
   }
   // return page.getByTestId(dataTestId).locator("tbody tr").nth(rowIndex).click();
-  return "TBA"
+  return 'TBA';
 };
 
 /**
@@ -32,11 +32,11 @@ export const findRowBy = (
   targetValue: string | null | undefined,
 ) => {
   if (!tableData) {
-    throw new Error("DataTable cannot be undefined!");
+    throw new Error('DataTable cannot be undefined!');
   }
 
   if (!targetValue) {
-    throw new Error("Target value cannot be undefined!");
+    throw new Error('Target value cannot be undefined!');
   }
 
   const index = tableData.findIndex((item) => item[targetColumn] === targetValue);

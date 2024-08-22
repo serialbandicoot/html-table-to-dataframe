@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom';
-import { buildData } from "./table-shared";
+import { buildData } from './table-shared';
 
 /**
  * toDataFrame is a method, which when passed the table element via
@@ -23,18 +23,14 @@ import { buildData } from "./table-shared";
  * Call: convertHTMLTable(["one", "col two"])
  */
 
-export async function toDataFrame(
-  html: string,
-  headers: string[],
-): Promise<{ [key: string]: string }[] | null> {
-
+export async function toDataFrame(html: string, headers: string[]): Promise<{ [key: string]: string }[] | null> {
   const dom = new JSDOM(html);
-  
-  const rowElements = Array.from(dom.window.document.querySelectorAll("table tbody tr"));
+
+  const rowElements = Array.from(dom.window.document.querySelectorAll('table tbody tr'));
 
   const rows = rowElements.map((row) =>
-    Array.from(row.querySelectorAll("td,th")).map((cell) => {
-      const queryOnElements = "input, textarea, button";
+    Array.from(row.querySelectorAll('td,th')).map((cell) => {
+      const queryOnElements = 'input, textarea, button';
       const inputElements = cell.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLButtonElement>(
         queryOnElements,
       );
@@ -46,11 +42,11 @@ export async function toDataFrame(
         }
 
         if (element instanceof HTMLButtonElement) {
-          return inputElements[0].getAttribute("aria-checked") || "";
+          return inputElements[0].getAttribute('aria-checked') || '';
         }
       }
 
-      return cell.textContent ? cell.textContent.trim() : "";
+      return cell.textContent ? cell.textContent.trim() : '';
     }),
   );
 

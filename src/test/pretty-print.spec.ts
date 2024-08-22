@@ -3,7 +3,7 @@ import { toDataFrame } from '../support/table/table-data';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 
-const headers: string[] = ["Person", "Likes", "Age"];
+const headers: string[] = ['Person', 'Likes', 'Age'];
 const filePath = join(__dirname, 'data', 'table1.html');
 
 let htmlString: string;
@@ -11,7 +11,6 @@ let htmlString: string;
 beforeEach(async () => {
   htmlString = await fs.readFile(filePath, 'utf-8');
 });
-
 
 test('should convert data frame to pretty table and output correct format', async () => {
   // Arrange

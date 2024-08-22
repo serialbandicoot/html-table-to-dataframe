@@ -2,12 +2,12 @@ import Table from 'cli-table3';
 
 /**
  * Converts an array of objects into a formatted table using cli-table3.
- * @param toPrettyPrint - An array of objects where each object has string keys 
+ * @param toPrettyPrint - An array of objects where each object has string keys
  * and string values, or null if no data is available.
- * 
+ *
  * @example
  * toPrettyPrint(dataFrame)
- * 
+ *
  *   ┌────────────────────┬────────────────────┬────────────────────┐
  *   │ Person             │ Likes              │ Age                │
  *   ├────────────────────┼────────────────────┼────────────────────┤
@@ -21,9 +21,7 @@ import Table from 'cli-table3';
  *   └────────────────────┴────────────────────┴────────────────────┘
  */
 
-export function toPrettyPrint(
-  table: { [key: string]: string }[] | null
-) {
+export function toPrettyPrint(table: { [key: string]: string }[] | null) {
   // Handle the case where table is null
   if (table === null) {
     console.log('No data available');
@@ -44,8 +42,8 @@ export function toPrettyPrint(
   });
 
   // Add rows to the table
-  table.forEach(row => {
-    const rowValues = headers.map(header => row[header] || ''); // Ensure the order of values matches the headers
+  table.forEach((row) => {
+    const rowValues = headers.map((header) => row[header] || ''); // Ensure the order of values matches the headers
     tableInstance.push(rowValues);
   });
 
