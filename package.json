@@ -4,7 +4,7 @@
   "description": "Convert an HTML Table to a DataFrame",
   "main": "index.js",
   "scripts": {
-    "test": "npx jest -- --coverage",
+    "test": "npx jest --coverage",
     "build": "tsc",
     "start": "node dist/index.js"
   },
