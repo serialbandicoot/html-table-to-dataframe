@@ -11,7 +11,6 @@
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "build": "tsc",
-    "postbuild": "cp ./src/*.d.ts ./dist/",
     "test": "jest",
     "lint": "eslint 'src/**/*.{ts,tsx}' --fix",
     "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
