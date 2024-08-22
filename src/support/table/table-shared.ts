@@ -52,18 +52,17 @@ export type locatorId = {
   value: string;
 };
 
-// buildData returns a formatted data-structure for table cells
-export function buildData<T>(rows: T[][], headers: string[]) {
-  interface RowData {
-    [key: string]: T;
-  }
+export interface RowData<T> {
+  [key: string]: T;
+}
 
+export function buildData<T>(rows: T[][], headers: string[]): RowData<T>[] {
   // Build the array of data
-  const tableData: RowData[] = rows.map((row) =>
-    row.reduce((rowData: RowData, cell, index) => {
+  const tableData: RowData<T>[] = rows.map((row) =>
+    row.reduce((rowData: RowData<T>, cell, index) => {
       rowData[headers[index]] = cell;
       return rowData;
-    }, {}),
+    }, {} as RowData<T>),
   );
 
   return tableData;
