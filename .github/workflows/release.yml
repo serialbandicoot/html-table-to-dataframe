@@ -36,6 +36,9 @@ jobs:
           git config --global user.email "samtreweek@gmail.com"
           git config --global user.name "Sam Treweek"
 
+      - run: | 
+         npm install
+
       - name: Build
         run: npm run build
         env:
