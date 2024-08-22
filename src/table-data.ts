@@ -37,11 +37,11 @@ export function toDataFrame(html: string, headers: string[]): { [key: string]: s
 
       if (inputElements.length > 0) {
         const element = inputElements[0];
-        if (element instanceof HTMLInputElement || element instanceof HTMLTextAreaElement) {
+        if (element instanceof dom.window.HTMLInputElement || element instanceof dom.window.HTMLTextAreaElement) {
           return element.value;
         }
 
-        if (element instanceof HTMLButtonElement) {
+        if (element instanceof dom.window.HTMLButtonElement) {
           return inputElements[0].getAttribute('aria-checked') || '';
         }
       }
