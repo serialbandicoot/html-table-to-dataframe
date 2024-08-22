@@ -32,6 +32,16 @@ const data = [
 
 await toTable(data);
 ```
+### In Print
+
+┌─────────┬──────────────────────┬─────┐
+│ Person  │ Likes                │ Age │
+├─────────┼──────────────────────┼─────┤
+│ Chris   │ HTML tables          │ 22  │
+│ Dennis  │ Web accessibility    │ 45  │
+│ Sarah   │ JavaScript frameworks│ 29  │
+│ Karen   │ Web performance      │ 36  │
+└─────────┴──────────────────────┴─────┘
 
 ### `toDataFrame`
 
@@ -61,11 +71,3 @@ const dataFrame = await toDataFrame(htmlString, headers);
 
 console.log(dataFrame);
 
-┌─────────┬──────────────────────┬─────┐
-│ Person  │ Likes                │ Age │
-├─────────┼──────────────────────┼─────┤
-│ Chris   │ HTML tables          │ 22  │
-│ Dennis  │ Web accessibility    │ 45  │
-│ Sarah   │ JavaScript frameworks│ 29  │
-│ Karen   │ Web performance      │ 36  │
-└─────────┴──────────────────────┴─────┘
