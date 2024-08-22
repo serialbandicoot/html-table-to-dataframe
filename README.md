@@ -31,6 +31,7 @@ const data = [
 ];
 
 await toTable(data);
+```
 
 ### `toDataFrame`
 
