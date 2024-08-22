@@ -1,4 +1,4 @@
-import { toDataFrame } from '../src/index'
+import { toDataFrame } from '../index'
 import { promises as fs } from 'fs';
 import { join } from 'path';
 

@@ -12,9 +12,9 @@
     "resolveJsonModule": true,                 // Support importing .json files
     "paths": {
       "@src/*": ["src/*"],                     // Alias for source files
-      "@test/*": ["test/*"]                    // Alias for test files
+      "@test/*": ["src/test/*"]                    // Alias for test files
     }
   },
-  "include": ["src/**/*", "test/**/*"],         // Include both src and test directories
+  "include": ["src/**/*", "src/test/**/*"],         // Include both src and test directories
   "exclude": ["node_modules", "dist"]          // Exclude node_modules and dist directories
 }
