@@ -1,20 +1,20 @@
 {
   "compilerOptions": {
-    "target": "ES6",                          // Set the target ECMAScript version
-    "module": "CommonJS",                      // Module system to use
-    "strict": true,                            // Enable strict type checking options
-    "esModuleInterop": true,                   // Enables interoperability between CommonJS and ES Modules
-    "skipLibCheck": true,                      // Skip type checking of declaration files
-    "forceConsistentCasingInFileNames": true,  // Ensure consistent casing in imports
-    "outDir": "./dist",                        // Output directory for compiled files
-    "rootDir": "./src",                        // Root directory of input files
-    "baseUrl": "./",                           // Base directory to resolve non-relative module names
-    "resolveJsonModule": true,                 // Support importing .json files
+    "target": "ES6",
+    "module": "CommonJS",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": "./",
+    "resolveJsonModule": true,
     "paths": {
-      "@src/*": ["src/*"],                     // Alias for source files
-      "@test/*": ["src/test/*"]                    // Alias for test files
+      "@src/*": ["src/*"],
+      "@test/*": ["src/test/*"] // Ensure this matches your jest.config.js
     }
   },
-  "include": ["src/**/*", "src/test/**/*"],         // Include both src and test directories
-  "exclude": ["node_modules", "dist"]          // Exclude node_modules and dist directories
+  "include": ["src/**/*", "src/test/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
