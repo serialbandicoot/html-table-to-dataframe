@@ -1,4 +1,4 @@
-import { toDataFrame, prettyPrint } from '../index';
+import { toDataFrame } from '../support/table/table-data';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 
@@ -26,21 +26,4 @@ test('should convert HTML table to data frame and match expected data', async ()
 
   // Assert
   expect(dataFrame).toEqual(expectedDataFrame);
-});
-
-test('should convert data frame to pretty table and output correct format', async () => {
-  // Arrange
-  const dataFrame = await toDataFrame(htmlString, headers);
-  const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
-
-  // Act
-  await prettyPrint(dataFrame);
-
-  // Assert
-  expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Person'));
-  expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Likes'));
-  expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('Age'));
-
-  // Restore console.log
-  logSpy.mockRestore();
 });
