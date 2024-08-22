@@ -23,7 +23,7 @@ import { buildData } from './table-shared';
  * Call: convertHTMLTable(["one", "col two"])
  */
 
-export async function toDataFrame(html: string, headers: string[]): Promise<{ [key: string]: string }[] | null> {
+export function toDataFrame(html: string, headers: string[]): { [key: string]: string }[] | null {
   const dom = new JSDOM(html);
 
   const rowElements = Array.from(dom.window.document.querySelectorAll('table tbody tr'));

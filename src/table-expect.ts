@@ -1,4 +1,4 @@
-import { Nullable } from '../types';
+import { Nullable } from './types';
 
 /**
  *  expectTableRowCountToBeGreaterThan expects a tableData as processed by convertHTMLTable.

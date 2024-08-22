@@ -1,4 +1,4 @@
-import { toDataFrame } from './support/table/table-data';
-import { toPrettyPrint } from './support/table/table-pretty';
+import { toDataFrame } from './table-data';
+import { toPrettyPrint } from './table-pretty';
 
 export { toPrettyPrint, toDataFrame };

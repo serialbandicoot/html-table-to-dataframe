@@ -1,5 +1,5 @@
-import { toPrettyPrint } from '@src/support/table/table-pretty';
-import { toDataFrame } from '../support/table/table-data';
+import { toPrettyPrint } from '@src/table-pretty';
+import { toDataFrame } from '@src/table-data';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 
@@ -14,7 +14,7 @@ beforeEach(async () => {
 
 test('should convert data frame to pretty table and output correct format', async () => {
   // Arrange
-  const dataFrame = await toDataFrame(htmlString, headers);
+  const dataFrame = toDataFrame(htmlString, headers);
   const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
 
   // Act

@@ -1,4 +1,4 @@
-import { toDataFrame } from '../support/table/table-data';
+import { toDataFrame } from '@src/table-data';
 import { promises as fs } from 'fs';
 import { join } from 'path';
 
@@ -22,7 +22,7 @@ test('should convert HTML table to data frame and match expected data', async ()
   const expectedDataFrame = expectedData;
 
   // Act
-  const dataFrame = await toDataFrame(htmlString, headers);
+  const dataFrame = toDataFrame(htmlString, headers);
 
   // Assert
   expect(dataFrame).toEqual(expectedDataFrame);
