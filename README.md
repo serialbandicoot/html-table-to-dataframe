@@ -10,9 +10,10 @@ This project provides utilities to convert HTML tables into structured data form
 
 **Usage:**
 
-```html
-<table><thead><tr><th scope="col">Person</th><th scope="col">Like</th><th scope="col">Age</th></tr></thead><tbody><tr><th scope="row">Chris</th><td>HTML tables</td><td>22</td></tr></tbody></table>
-```
+| Person | Like         | Age |
+|--------|--------------|-----|
+| Chris  | HTML tables  |  22 |
+
 
 ```typescript
 import { toDataFrame } from 'html-table-to-dataframe';
