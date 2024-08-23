@@ -10,10 +10,12 @@ This project provides utilities to convert HTML tables into structured data form
 
 **Usage:**
 
-| Person | Like         | Age |
-|--------|--------------|-----|
-| Chris  | HTML tables  |  22 |
-
+| Person | Like                  | Age |
+|--------|-----------------------|-----|
+| Chris  | HTML tables           |  22 |
+| Dennis | Web accessibility     |  45 |
+| Sarah  | JavaScript frameworks |  29 |
+| Karen  | Web performance       |  36 |
 
 ```typescript
 import { toDataFrame } from 'html-table-to-dataframe';
