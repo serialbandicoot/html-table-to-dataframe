@@ -297,7 +297,7 @@ export const expectColumnToBeValue = (tableData: { [key: string]: string }[] | n
 
 export const expectColumnGroupToBeValue = (tableData: { [key: string]: string }[] | null, filterGroup: GroupType[]) => {
   if (tableData === null || tableData.length !== 1) {
-    throw new Error(`Expected row count tbe 1`);
+    throw new Error(`Expected row count to be 1`);
   }
   filterGroup.forEach((item) => {
     if (item.filterValue === undefined || item.filterValue === null) {
@@ -352,7 +352,7 @@ export const expectTableToNotMatch = (
   }
 
   if (tableData1.length !== tableData2.length) {
-    throw new Error(`Tables are not valid Table1: ${tableData1.length} Vs Table2: ${tableData2.length}`);
+    throw new Error(`Tables are not valid Table1/Size: ${tableData1.length} Vs Table2/Size: ${tableData2.length}`);
   }
 
   if (tableData1.length === 0 || tableData2.length === 0) {
@@ -370,4 +370,50 @@ export const expectTableToNotMatch = (
   };
 
   expect(tableAsString(tableData1)).not.toEqual(tableAsString(tableData2));
+};
+
+/**
+ * expectTableToMatch will convert the tables key/values
+ * into a string and compares the two for equality.
+ *
+ * @param tableData1
+ * @param tableData2
+ *
+ * @example
+ *
+ * table1: | col_1 | col_2 | table2: | col_1 | col_2 |
+ *         | ------| ----- |         | ------| ----- |
+ *         | 1     | 3     |         | 1     | 4     |
+ *
+ * expectTableToMatch(table1, table2);
+ *
+ * This will fail as the two tables are different
+ */
+export const expectTableToMatch = (
+  tableData1: { [key: string]: string }[] | null,
+  tableData2: { [key: string]: string }[] | null,
+) => {
+  if (!tableData1 || !tableData2) {
+    throw new Error('Table data cannot be null');
+  }
+
+  if (tableData1.length !== tableData2.length) {
+    throw new Error(`Tables are not valid Table1/Size: ${tableData1.length} Vs Table2/Size: ${tableData2.length}`);
+  }
+
+  if (tableData1.length === 0 || tableData2.length === 0) {
+    throw new Error(`Rows cannot be empty`);
+  }
+
+  const tableAsString = (table: { [key: string]: string }[]) => {
+    return table
+      .map((obj) =>
+        Object.entries(obj)
+          .map(([key, value]) => `${key}: ${value}`)
+          .join(''),
+      )
+      .join('');
+  };
+
+  expect(tableAsString(tableData1)).toEqual(tableAsString(tableData2));
 };
