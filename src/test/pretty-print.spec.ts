@@ -1,20 +1,11 @@
 import { toPrettyPrint } from '@src/table-pretty';
 import { toDataFrame } from '@src/table-data';
-import { promises as fs } from 'fs';
-import { join } from 'path';
-
-const headers: string[] = ['Person', 'Likes', 'Age'];
-const filePath = join(__dirname, 'data', 'table1.html');
-
-let htmlString: string;
-
-beforeEach(async () => {
-  htmlString = await fs.readFile(filePath, 'utf-8');
-});
+import { defaultHeaders, getHTMLFile } from './support/utils';
 
 test('should convert data frame to pretty table and output correct format', async () => {
   // Arrange
-  const dataFrame = toDataFrame(htmlString, headers);
+  const htmlString = await getHTMLFile('table_1_row.html');
+  const dataFrame = toDataFrame(htmlString, defaultHeaders);
   const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
 
   // Act

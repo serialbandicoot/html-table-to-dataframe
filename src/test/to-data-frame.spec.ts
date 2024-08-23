@@ -1,10 +1,6 @@
 import { toDataFrame } from '@src/table-data';
-import { promises as fs } from 'fs';
-import { join } from 'path';
+import { defaultHeaders, getHTMLFile } from './support/utils';
 
-const headers: string[] = ['Person', 'Likes', 'Age'];
-const filePath1 = join(__dirname, 'data', 'table1.html');
-const filePath2 = join(__dirname, 'data', 'table2.html');
 const expectedData = [
   { Person: 'Chris', Likes: 'HTML tables', Age: '22' },
   { Person: 'Dennis', Likes: 'Web accessibility', Age: '45' },
@@ -12,32 +8,35 @@ const expectedData = [
   { Person: 'Karen', Likes: 'Web performance', Age: '36' },
 ];
 
-let htmlString1: string;
-let htmlString2: string;
-
-beforeEach(async () => {
-  htmlString1 = await fs.readFile(filePath1, 'utf-8');
-  htmlString2 = await fs.readFile(filePath2, 'utf-8');
-});
-
 test('should convert HTML table to data frame with simple table markup', async () => {
   // Arrange
-  const expectedDataFrame = expectedData;
+  const htmlString = await getHTMLFile('table.html');
 
   // Act
-  const dataFrame = toDataFrame(htmlString1, headers);
+  const dataFrame = toDataFrame(htmlString, defaultHeaders);
 
   // Assert
-  expect(dataFrame).toEqual(expectedDataFrame);
+  expect(dataFrame).toEqual(expectedData);
 });
 
 test('should convert HTML table to data frame with input fields in table markup', async () => {
   // Arrange
-  const expectedDataFrame = expectedData;
+  const htmlString = await getHTMLFile('table_input.html');
 
   // Act
-  const dataFrame = toDataFrame(htmlString2, headers);
+  const dataFrame = toDataFrame(htmlString, defaultHeaders);
 
   // Assert
-  expect(dataFrame).toEqual(expectedDataFrame);
+  expect(dataFrame).toEqual(expectedData);
+});
+
+test('should convert HTML table to data frame with input fields in table markup', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table_textarea.html');
+
+  // Act
+  const dataFrame = toDataFrame(htmlString, defaultHeaders);
+
+  // Assert
+  expect(dataFrame).toEqual(expectedData);
 });
