@@ -13,7 +13,7 @@ test('should convert HTML table to data frame with simple table markup', async (
   const htmlString = await getHTMLFile('table.html');
 
   // Act
-  const dataFrame = toDataFrame(htmlString, defaultHeaders);
+  const dataFrame = toDataFrame(htmlString);
 
   // Assert
   expect(dataFrame).toEqual(expectedData);
@@ -39,4 +39,19 @@ test('should convert HTML table to data frame with input fields in table markup'
 
   // Assert
   expect(dataFrame).toEqual(expectedData);
+});
+
+test('should convert HTML table with Unknown for the missing headers', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table_missing_headers.html');
+  const expectedMissingData = [
+    { Person: 'Chris', Unknown0: "Record", Likes: 'JavaScript', Age: '22', Unknown1: ""},
+  ];
+  
+
+  // Act
+  const dataFrame = toDataFrame(htmlString);
+
+  // Assert
+  expect(dataFrame).toEqual(expectedMissingData);
 });

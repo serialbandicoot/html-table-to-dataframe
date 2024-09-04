@@ -23,10 +23,15 @@ import { buildData } from './table-shared';
  * Call: convertHTMLTable(["one", "col two"])
  */
 
-export function toDataFrame(html: string, headers: string[]): { [key: string]: string }[] | null {
+export function toDataFrame(html: string, headers?: string[]): { [key: string]: string }[] | null {
   const dom = new JSDOM(html);
+  const document = dom.window.document;
 
-  const rowElements = Array.from(dom.window.document.querySelectorAll('table tbody tr'));
+  if (!headers || headers.length === 0) {
+    headers = generateHeaders(document);
+  }
+
+  const rowElements = Array.from(document.querySelectorAll('table tbody tr'));
 
   const rows = rowElements.map((row) =>
     Array.from(row.querySelectorAll('td,th')).map((cell) => {
@@ -51,4 +56,26 @@ export function toDataFrame(html: string, headers: string[]): { [key: string]: s
   );
 
   return buildData<string>(rows, headers);
+}
+
+/**
+ * Generates an array of header names from the table's thead section.
+ * If a header element's text content is empty, it will be replaced with a unique identifier
+ * in the format 'unknownX', where X is the number of missing headers encountered so far.
+ *
+ * @param {Document} document - The document object where the table resides.
+ * @returns {string[]} - An array of header names, with empty headers replaced by 'unknownX'.
+ */
+function generateHeaders(document: Document): string[] {
+  const headerElements = Array.from(document.querySelectorAll('table thead th'));
+  let unknownCount = 0; 
+
+  return headerElements.map((th) => {
+    const text = th.textContent?.trim();
+    if (text && text !== '') {
+      return text;
+    } else {
+      return `Unknown${unknownCount++}`; 
+    }
+  });
 }
