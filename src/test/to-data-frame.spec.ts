@@ -30,6 +30,20 @@ test('should convert HTML table to data frame with input fields in table markup'
   expect(dataFrame).toEqual(expectedData);
 });
 
+test('should convert HTML table using my own headers', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table_1_row.html');
+  const expectedWithProvidedKeys = [
+    { a: 'Chris', "*b": 'HTML tables', c: '22' }
+  ];
+
+  // Act
+  const dataFrame = toDataFrame(htmlString, ["a", "*b", "c"]);
+
+  // Assert
+  expect(dataFrame).toEqual(expectedWithProvidedKeys);
+});
+
 test('should convert HTML table to data frame with input fields in table markup', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table_textarea.html');
@@ -51,4 +65,18 @@ test('should convert HTML table with Unknown for the missing headers', async () 
 
   // Assert
   expect(dataFrame).toEqual(expectedMissingData);
+});
+
+test('should validate inaccurate provided header length', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table_input.html');
+
+  // Act
+  try {
+    const dataFrame = toDataFrame(htmlString, ["a", "b"]);
+  } catch (error) {
+    // Assert
+    expect((error as Error).message).toEqual("The number of provided headers (2) does not match the number of columns in the table (3).");
+  }
+
 });

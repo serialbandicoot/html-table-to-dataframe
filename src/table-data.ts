@@ -29,6 +29,8 @@ export function toDataFrame(html: string, headers?: string[]): { [key: string]: 
 
   if (!headers || headers.length === 0) {
     headers = generateHeaders(document);
+  } else {
+    validateHeaders(headers, document);
   }
 
   const rowElements = Array.from(document.querySelectorAll('table tbody tr'));
@@ -78,4 +80,19 @@ function generateHeaders(document: Document): string[] {
       return `Unknown${unknownCount++}`;
     }
   });
+}
+
+/**
+ * Validates the provided headers against the number of columns in the table.
+ * Throws an error if the lengths do not match.
+ *
+ * @param headers - The headers provided by the user.
+ * @param document - The HTML document containing the table.
+ */
+
+function validateHeaders(headers: string[], document: Document): void {
+  const columnCount = document.querySelectorAll('table thead th').length;
+  if (headers.length !== columnCount) {
+    throw new Error(`The number of provided headers (${headers.length}) does not match the number of columns in the table (${columnCount}).`);
+  }
 }
