@@ -93,6 +93,8 @@ function generateHeaders(document: Document): string[] {
 function validateHeaders(headers: string[], document: Document): void {
   const columnCount = document.querySelectorAll('table thead th').length;
   if (headers.length !== columnCount) {
-    throw new Error(`The number of provided headers (${headers.length}) does not match the number of columns in the table (${columnCount}).`);
+    throw new Error(
+      `The number of provided headers (${headers.length}) does not match the number of columns in the table (${columnCount}).`,
+    );
   }
 }
