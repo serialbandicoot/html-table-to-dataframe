@@ -68,14 +68,14 @@ export function toDataFrame(html: string, headers?: string[]): { [key: string]: 
  */
 function generateHeaders(document: Document): string[] {
   const headerElements = Array.from(document.querySelectorAll('table thead th'));
-  let unknownCount = 0; 
+  let unknownCount = 0;
 
   return headerElements.map((th) => {
     const text = th.textContent?.trim();
     if (text && text !== '') {
       return text;
     } else {
-      return `Unknown${unknownCount++}`; 
+      return `Unknown${unknownCount++}`;
     }
   });
 }
