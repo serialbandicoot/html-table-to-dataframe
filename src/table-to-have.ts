@@ -5,17 +5,14 @@ import { Nullable, TableData } from './types';
  * The assertion checks that the total row count of the table is greater than the expected value.
  *
  * Example:
- * 
+ *
  * | one | two |
  * | 1   | 3   |
  * | 2   | 100 |
  *
  * toHaveTableRowCountGreaterThan(dt, 3) will fail because the row count is 2.
  */
-export const toHaveTableRowCountGreaterThan = (
-  tableData: TableData,
-  expectedLength: number,
-) => {
+export const toHaveTableRowCountGreaterThan = (tableData: TableData, expectedLength: number) => {
   if (tableData.length <= expectedLength) {
     throw new Error(`Expected row count to be greater than ${expectedLength}, but it was ${tableData.length}.`);
   }
@@ -35,11 +32,7 @@ export const toHaveTableRowCountGreaterThan = (
  *
  * "Write Once, Never Read" - Use sparingly, add expectations where RegExs can be replaced.
  */
-export const toHaveColumnValuesToMatchRegex = (
-  tableData: TableData,
-  columnHeader: string,
-  regexPattern: string,
-) => {
+export const toHaveColumnValuesToMatchRegex = (tableData: TableData, columnHeader: string, regexPattern: string) => {
   // Create a regular expression object from the regexPattern string
   const regex = new RegExp(regexPattern);
 
@@ -47,7 +40,7 @@ export const toHaveColumnValuesToMatchRegex = (
     const actualValue = row[columnHeader];
     if (!regex.test(actualValue)) {
       throw new Error(
-        `Column header "${columnHeader}" with value "${actualValue}" does not match the pattern "${regexPattern}".`
+        `Column header "${columnHeader}" with value "${actualValue}" does not match the pattern "${regexPattern}".`,
       );
     }
   }
@@ -75,7 +68,7 @@ export const toHaveColumnValuesToBeInRange = (
     const actualValue = parseFloat(row[columnHeader]); // Convert the value to a number
     if (isNaN(actualValue) || actualValue < minValue || actualValue > maxValue) {
       throw new Error(
-        `Column header "${columnHeader}" with value "${row[columnHeader]}" is not within the range [${minValue}, ${maxValue}].`
+        `Column header "${columnHeader}" with value "${row[columnHeader]}" is not within the range [${minValue}, ${maxValue}].`,
       );
     }
   }
@@ -93,10 +86,7 @@ export const toHaveColumnValuesToBeInRange = (
  *
  * toHaveColumnValuesToBeNumbers(dt, "two") will fail because {"two":"1e"} is not a number.
  */
-export const toHaveColumnValuesToBeNumbers = (
-  tableData: TableData,
-  columnHeader: string,
-) => {
+export const toHaveColumnValuesToBeNumbers = (tableData: TableData, columnHeader: string) => {
   for (const row of tableData) {
     const parsedValue = parseFloat(row[columnHeader]);
 
@@ -152,7 +142,9 @@ export const toHaveColumnToMatchWhenFilteredBy = (
   const filteredTarget = targetCheck.filter((item) => item[targetColumn] === targetValue);
   if (filteredTarget.length === 0) {
     const mappedItems = tableData.map((i) => i[targetColumn]).join(', ');
-    throw new Error(`Column header "${targetColumn}" with value "${targetValue}" does not match any items (${mappedItems}).`);
+    throw new Error(
+      `Column header "${targetColumn}" with value "${targetValue}" does not match any items (${mappedItems}).`,
+    );
   }
 };
 
@@ -215,11 +207,7 @@ export const toHaveColumnToMatchGroupWhenFilteredBy = (
  *
  * This will fail as {"col_1":"2"} is found and should not be.
  */
-export const toHaveColumnToNotMatch = (
-  tableData: TableData,
-  targetColumn: string,
-  targetValue: string,
-) => {
+export const toHaveColumnToNotMatch = (tableData: TableData, targetColumn: string, targetValue: string) => {
   if (!tableData) {
     throw new Error('DataTable cannot be undefined!');
   }
@@ -334,10 +322,7 @@ export const toHaveColumnGroupToBeValues = (tableData: TableData, filterGroups: 
  *
  * This will fail as the two tables are the same
  */
-export const toHaveTableToNotMatch = (
-  tableData1: TableData,
-  tableData2: TableData,
-) => {
+export const toHaveTableToNotMatch = (tableData1: TableData, tableData2: TableData) => {
   if (!tableData1 || !tableData2) {
     throw new Error('Table data cannot be null');
   }
@@ -385,10 +370,7 @@ export const toHaveTableToNotMatch = (
  *
  * This will fail as the two tables are different
  */
-export const toHaveTableToMatch = (
-  tableData1: TableData,
-  tableData2: TableData,
-) => {
+export const toHaveTableToMatch = (tableData1: TableData, tableData2: TableData) => {
   if (!tableData1 || !tableData2) {
     throw new Error('Table data cannot be null');
   }
