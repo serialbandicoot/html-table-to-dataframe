@@ -63,47 +63,240 @@ await toPrettyPrint(data);
 
 The toDataFrame function converts an HTML string into a data frame structure, which is an array of objects where each object represents a row in the table. This function is essential for transforming raw HTML tables into a format that can be easily manipulated and tested.
 
-### expectTableRowCountToBeGreaterThan
+### toHaveColumnToBeValue
 
-This expectation checks that the number of rows in the data frame exceeds a specified number. It is useful for ensuring that a table has enough data before proceeding with more detailed checks.
+Checks if a single row in the table has the specified value in a given column.
 
-### expectColumnToBeValue
+#### toHaveColumnToBeValue(tableData, 'col_2', '3');
 
-The expectColumnToBeValue function verifies that a specific column contains a specific value across all rows. This can be used to confirm that a particular field in the table has been populated with the correct information.
+```typescript
+const tableData = [
+  { col_1: '1', col_2: '3' }
+];
+```
 
-### expectColumnValuesToMatchRegex
+toHaveColumnToBeValue(tableData, 'col_2', '3'); // Passes, as the value in 'col_2' is '3'
 
-This function checks that all values in a specified column match a given regular expression pattern. It’s useful for validating formats, such as ensuring that a “Date” column contains values in a “YYYY-MM-DD” format.
+### toHaveTableRowCountGreaterThan
 
-### expectColumnValuesToBeInRange
+Checks if the table contains more rows than the specified count.
 
-expectColumnValuesToBeInRange ensures that the values in a specified column fall within a given numerical range. This is often used for validating that numeric data such as “Age” or “Score” lies within an expected range.
+#### toHaveTableRowCountGreaterThan(tableData, 3);
 
-### expectColumnValuesToBeNumbers
+```typescript
+const tableData = [
+  { one: '1', two: '3' },
+  { one: '2', two: '100' }
+];
+```
 
-The expectColumnValuesToBeNumbers function checks that all values in a specified column are numbers. This is important for ensuring that data types are consistent and correct.
+toHaveTableRowCountGreaterThan(tableData, 3); // Fails, as row count is 2
 
-### expectColumnToMatchWhenFilteredBy
+### toHaveColumnValuesToMatchRegex
 
-This function verifies that a value in one column matches a specified value when filtered by another column. It is useful for validating data integrity across related fields.
+Checks if the values in the specified column match the given regular expression pattern.
 
-### expectColumnToMatchGroupWhenFilteredBy
+#### toHaveColumnValuesToMatchRegex(tableData, "two", "\\d\\d");
 
-expectColumnToMatchGroupWhenFilteredBy is used to check that a column’s value matches a specific value when filtered by a group of conditions. This is helpful for complex validations involving multiple criteria.
+```typescript
+const tableData = [
+  { one: '1', two: '3' },
+  { one: '2', two: '100' }
+];
+```
 
-### expectColumnToNotMatch
+toHaveColumnValuesToMatchRegex(tableData, "two", "\\d\\d"); // Fails, as {"two":"100"} has 3 digits
 
-The expectColumnToNotMatch function ensures that a specified column does not contain a certain value. This can be used to confirm that certain invalid or unexpected values are not present in the data.
+### toHaveColumnValuesToBeInRange
 
-### expectTableRowCountToBe
+Checks if the values in the specified column fall within the given range.
 
-This expectation checks that the number of rows in the data frame is exactly as expected. It is a straightforward check to validate that the table has the correct number of entries.
+#### toHaveColumnValuesToBeInRange(tableData, "two", 0, 4);
 
-### expectColumnGroupToBeValue
+```typescript
+const tableData = [
+  { one: '1', two: '3' },
+  { one: '2', two: '100' }
+];
+```
 
-expectColumnGroupToBeValue verifies that a group of columns matches a set of expected values. This is useful for ensuring that related data fields are populated with the correct data.
+toHaveColumnValuesToBeInRange(tableData, "two", 0, 4); // Fails, as {"two":"100"} is greater than 4
 
-### expectColumnGroupToBeValues
+### toHaveColumnValuesToBeNumbers
 
-This function checks that multiple groups of columns each match their respective expected values. It is used for 
+Checks if the values in the specified column are numbers.
 
+#### toHaveColumnValuesToBeNumbers(tableData, "two");
+
+```typescript
+const tableData = [
+  { one: '1', two: '3' },
+  { one: '2', two: '1e' }
+];
+```
+
+toHaveColumnValuesToBeNumbers(tableData, "two"); // Fails, as {"two":"1e"} is not a number
+
+### toHaveColumnToMatchWhenFilteredBy
+
+Checks if a target column/value pair exists when filtered by a specified column/value.
+
+#### toHaveColumnToMatchWhenFilteredBy(tableData, "col_1", "2", "col_2", "xyz");
+
+```typescript
+const tableData = [
+  { col_1: '1', col_2: '3' },
+  { col_1: '2', col_2: '1e' }
+];
+```
+
+toHaveColumnToMatchWhenFilteredBy(tableData, "col_1", "2", "col_2", "xyz"); 
+// Fails, as {"col_1":"2"} is found, but {"col_2":"xyz"} is not
+
+### toHaveColumnToMatchGroupWhenFilteredBy
+
+Uses an array of `GroupType` to check if a target column/value pair exists when filtered by each specified column/value.
+
+#### toHaveColumnToMatchGroupWhenFilteredBy(tableData, "col_1", "1", group);
+
+```typescript
+type GroupType = {
+  filterColumn: string;
+  filterValue: Nullable<string>;
+};
+
+const tableData = [
+  { col_1: '1', col_2: 'a', col_3: 'b' }
+];
+
+const group: GroupType[] = [
+  { filterColumn: "col_2", filterValue: "a" },
+  { filterColumn: "col_3", filterValue: "a" }
+];
+```
+
+toHaveColumnToMatchGroupWhenFilteredBy(tableData, "col_1", "1", group);
+// Fails, as {"col_2": "a"} is OK; however, {"col_3": "a"} should be "b"
+
+### toHaveColumnToNotMatch
+
+Confirms that a specified column no longer contains a certain value. This is useful for checking if a row has been deleted or archived.
+
+#### toHaveColumnToNotMatch(tableData, "col_1", "2");
+
+```typescript
+const tableData = [
+  { col_1: '1', col_2: '3' },
+  { col_1: '2', col_2: '1e' }
+];
+```
+
+toHaveColumnToNotMatch(tableData, "col_1", "2");
+// Fails, as {"col_1":"2"} is found and should not be.
+
+### toHaveTableRowCount
+
+Matches the row count of the table data against the expected value.
+
+#### toHaveTableRowCount(tableData, 3);
+
+```typescript
+const tableData = [
+  { col_1: '1', col_2: '3' },
+  { col_1: '2', col_2: '1e' }
+];
+```
+
+toHaveTableRowCount(tableData, 3);
+// Fails, as row count should be 2.
+
+### toHaveColumnToBeValue
+
+Expects only 1 table row and checks if the column value matches the provided value.
+
+#### toHaveColumnToBeValue(tableData, "col_2", "3");
+
+```typescript
+const tableData = [
+  { col_1: '1', col_2: '3' }
+];
+```
+
+toHaveColumnToBeValue(tableData, "col_2", "3");
+// Passes, as the column value is "3".
+
+### toHaveColumnGroupToBeValue
+
+Expects only 1 table row and checks if the column values in a group match the provided values. Exceptions are made when the filter value is null or undefined.
+
+#### toHaveColumnGroupToBeValue(tableData, [{ filterColumn: "col_2", filterValue: "3" }]);
+
+```typescript
+const tableData = [
+  { col_1: '1', col_2: '3' }
+];
+
+const filterGroup = [
+  { filterColumn: "col_2", filterValue: "3" }
+];
+```
+
+toHaveColumnGroupToBeValue(tableData, filterGroup);
+// Passes, as the column value for "col_2" is "3".
+
+### toHaveColumnGroupToBeValues
+
+Performs multiple grouped checks using `toHaveColumnGroupToBeValue` for each row. The `tableData` must be the same length as the `filterGroups`, and each entry in `filterGroups` is applied to the corresponding row in `tableData`.
+
+#### toHaveColumnGroupToBeValues(tableData, filterGroups);
+
+```typescript
+const tableData = [
+  { col_1: '1', col_2: '3' },
+  { col_1: '2', col_2: '4' }
+];
+
+const filterGroups = [
+  [{ filterColumn: "col_2", filterValue: "3" }],
+  [{ filterColumn: "col_2", filterValue: "4" }]
+];
+```
+toHaveColumnGroupToBeValues(tableData, filterGroups);
+// Passes, as the column values match the expected values for each row.
+
+### toHaveTableToNotMatch
+
+Converts two tables into strings and compares them for equality. This assertion checks that the two tables do not match exactly.
+
+#### toHaveTableToNotMatch(tableData1, tableData2);
+
+```typescript
+const tableData1 = [
+  { col_1: '1', col_2: '3' }
+];
+
+const tableData2 = [
+  { col_1: '1', col_2: '3' }
+];
+```
+
+toHaveTableToNotMatch(tableData1, tableData2);
+// Fails, as the two tables are identical
+
+### toHaveTableToMatch
+
+Converts two tables into strings and compares them for equality. This assertion checks that the two tables match exactly.
+
+#### toHaveTableToMatch(tableData1, tableData2);
+
+```typescript
+const tableData1 = [
+  { col_1: '1', col_2: '3' }
+];
+
+const tableData2 = [
+  { col_1: '1', col_2: '4' }
+];
+```
+toHaveTableToMatch(tableData1, tableData2);
+// Fails, as the two tables are different

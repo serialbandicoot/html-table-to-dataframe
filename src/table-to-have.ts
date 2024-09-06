@@ -367,6 +367,7 @@ export const toHaveTableToNotMatch = (
     throw new Error('Tables are identical');
   }
 };
+
 /**
  * toHaveTableToMatch will convert the tables key/values
  * into a string and compares the two for equality.
