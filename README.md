@@ -73,9 +73,9 @@ Checks if a single row in the table has the specified value in a given column.
 const tableData = [
   { col_1: '1', col_2: '3' }
 ];
-```
 
 toHaveColumnToBeValue(tableData, 'col_2', '3'); // Passes, as the value in 'col_2' is '3'
+```
 
 ### toHaveTableRowCountGreaterThan
 
@@ -88,9 +88,9 @@ const tableData = [
   { one: '1', two: '3' },
   { one: '2', two: '100' }
 ];
-```
 
 toHaveTableRowCountGreaterThan(tableData, 3); // Fails, as row count is 2
+```
 
 ### toHaveColumnValuesToMatchRegex
 
@@ -103,9 +103,9 @@ const tableData = [
   { one: '1', two: '3' },
   { one: '2', two: '100' }
 ];
-```
 
 toHaveColumnValuesToMatchRegex(tableData, "two", "\\d\\d"); // Fails, as {"two":"100"} has 3 digits
+```
 
 ### toHaveColumnValuesToBeInRange
 
@@ -118,9 +118,9 @@ const tableData = [
   { one: '1', two: '3' },
   { one: '2', two: '100' }
 ];
-```
 
 toHaveColumnValuesToBeInRange(tableData, "two", 0, 4); // Fails, as {"two":"100"} is greater than 4
+```
 
 ### toHaveColumnValuesToBeNumbers
 
@@ -133,9 +133,9 @@ const tableData = [
   { one: '1', two: '3' },
   { one: '2', two: '1e' }
 ];
-```
 
 toHaveColumnValuesToBeNumbers(tableData, "two"); // Fails, as {"two":"1e"} is not a number
+```
 
 ### toHaveColumnToMatchWhenFilteredBy
 
@@ -148,10 +148,10 @@ const tableData = [
   { col_1: '1', col_2: '3' },
   { col_1: '2', col_2: '1e' }
 ];
-```
 
 toHaveColumnToMatchWhenFilteredBy(tableData, "col_1", "2", "col_2", "xyz"); 
 // Fails, as {"col_1":"2"} is found, but {"col_2":"xyz"} is not
+```
 
 ### toHaveColumnToMatchGroupWhenFilteredBy
 
@@ -173,10 +173,10 @@ const group: GroupType[] = [
   { filterColumn: "col_2", filterValue: "a" },
   { filterColumn: "col_3", filterValue: "a" }
 ];
-```
 
 toHaveColumnToMatchGroupWhenFilteredBy(tableData, "col_1", "1", group);
 // Fails, as {"col_2": "a"} is OK; however, {"col_3": "a"} should be "b"
+```
 
 ### toHaveColumnToNotMatch
 
@@ -189,10 +189,10 @@ const tableData = [
   { col_1: '1', col_2: '3' },
   { col_1: '2', col_2: '1e' }
 ];
-```
 
 toHaveColumnToNotMatch(tableData, "col_1", "2");
 // Fails, as {"col_1":"2"} is found and should not be.
+```
 
 ### toHaveTableRowCount
 
@@ -205,10 +205,10 @@ const tableData = [
   { col_1: '1', col_2: '3' },
   { col_1: '2', col_2: '1e' }
 ];
-```
 
 toHaveTableRowCount(tableData, 3);
 // Fails, as row count should be 2.
+```
 
 ### toHaveColumnToBeValue
 
@@ -220,10 +220,10 @@ Expects only 1 table row and checks if the column value matches the provided val
 const tableData = [
   { col_1: '1', col_2: '3' }
 ];
-```
 
 toHaveColumnToBeValue(tableData, "col_2", "3");
 // Passes, as the column value is "3".
+```
 
 ### toHaveColumnGroupToBeValue
 
@@ -239,10 +239,10 @@ const tableData = [
 const filterGroup = [
   { filterColumn: "col_2", filterValue: "3" }
 ];
-```
 
 toHaveColumnGroupToBeValue(tableData, filterGroup);
 // Passes, as the column value for "col_2" is "3".
+```
 
 ### toHaveColumnGroupToBeValues
 
@@ -260,9 +260,9 @@ const filterGroups = [
   [{ filterColumn: "col_2", filterValue: "3" }],
   [{ filterColumn: "col_2", filterValue: "4" }]
 ];
-```
 toHaveColumnGroupToBeValues(tableData, filterGroups);
 // Passes, as the column values match the expected values for each row.
+```
 
 ### toHaveTableToNotMatch
 
@@ -278,10 +278,10 @@ const tableData1 = [
 const tableData2 = [
   { col_1: '1', col_2: '3' }
 ];
-```
 
 toHaveTableToNotMatch(tableData1, tableData2);
 // Fails, as the two tables are identical
+```
 
 ### toHaveTableToMatch
 
@@ -297,6 +297,6 @@ const tableData1 = [
 const tableData2 = [
   { col_1: '1', col_2: '4' }
 ];
-```
 toHaveTableToMatch(tableData1, tableData2);
 // Fails, as the two tables are different
+```
