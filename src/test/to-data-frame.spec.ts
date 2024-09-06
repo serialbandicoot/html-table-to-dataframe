@@ -19,6 +19,17 @@ test('should convert HTML table to data frame with simple table markup', async (
   expect(dataFrame).toEqual(expectedData);
 });
 
+test('should return an empty object from no rows', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table_empty.html');
+
+  // Act
+  const dataFrame = toDataFrame(htmlString);
+
+  // Assert
+  expect(dataFrame).toEqual([]);
+});
+
 test('should convert HTML table to data frame with input fields in table markup', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table_input.html');

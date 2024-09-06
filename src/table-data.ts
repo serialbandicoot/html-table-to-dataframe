@@ -1,5 +1,4 @@
 import { JSDOM } from 'jsdom';
-import { buildData } from './table-shared';
 import { TableData } from './types';
 
 /**
@@ -98,4 +97,20 @@ function validateHeaders(headers: string[], document: Document): void {
       `The number of provided headers (${headers.length}) does not match the number of columns in the table (${columnCount}).`,
     );
   }
+}
+
+export interface RowData<T> {
+  [key: string]: T;
+}
+
+export function buildData<T>(rows: T[][], headers: string[]): RowData<T>[] {
+  // Build the array of data
+  const tableData: RowData<T>[] = rows.map((row) =>
+    row.reduce((rowData: RowData<T>, cell, index) => {
+      rowData[headers[index]] = cell;
+      return rowData;
+    }, {} as RowData<T>),
+  );
+
+  return tableData;
 }
