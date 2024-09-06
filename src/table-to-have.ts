@@ -1,4 +1,4 @@
-import { Nullable, TableData } from './types';
+import { TableData } from './types';
 
 /**
  * toHaveTableRowCountGreaterThan expects a tableData as processed by convertHTMLTable.
@@ -116,9 +116,9 @@ export const toHaveColumnValuesToBeNumbers = (tableData: TableData, columnHeader
 export const toHaveColumnToMatchWhenFilteredBy = (
   tableData: TableData,
   targetColumn: string,
-  targetValue: Nullable<string>,
+  targetValue: string,
   filterColumn: string,
-  filterValue: Nullable<string>,
+  filterValue: string,
 ) => {
   if (targetValue === undefined || targetValue === null) {
     throw new Error('Target value cannot be null or undefined!');
@@ -154,7 +154,7 @@ export const toHaveColumnToMatchWhenFilteredBy = (
  */
 export type GroupType = {
   filterColumn: string;
-  filterValue: Nullable<string>;
+  filterValue: string;
 };
 
 /**
@@ -179,7 +179,7 @@ export type GroupType = {
 export const toHaveColumnToMatchGroupWhenFilteredBy = (
   tableData: TableData,
   targetColumn: string,
-  targetValue: Nullable<string>,
+  targetValue: string,
   filterGroup: GroupType[],
 ) => {
   filterGroup.forEach((item) => {
@@ -210,6 +210,10 @@ export const toHaveColumnToMatchGroupWhenFilteredBy = (
 export const toHaveColumnToNotMatch = (tableData: TableData, targetColumn: string, targetValue: string) => {
   if (!tableData) {
     throw new Error('DataTable cannot be undefined!');
+  }
+
+  if (!targetValue) {
+    throw new Error('Target Value cannot be undefined!');
   }
 
   const targetCheck = tableData.find((item) => item[targetColumn] === targetValue);
