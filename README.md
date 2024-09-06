@@ -45,19 +45,19 @@ await toPrettyPrint(data);
 
 ## Accessible Expectations
 
-- [expectTableRowCountToBeGreaterThan](#expecttablerowcounttobegreaterthan)
-- [expectColumnToBeValue](#expectcolumntobevalue)
-- [expectColumnValuesToMatchRegex](#expectcolumnvaluestomatchregex)
-- [expectColumnValuesToBeInRange](#expectcolumnvaluestobeinrange)
-- [expectColumnValuesToBeNumbers](#expectcolumnvaluestobenumbers)
-- [expectColumnToMatchWhenFilteredBy](#expectcolumntomatchwhenfilteredby)
-- [expectColumnToMatchGroupWhenFilteredBy](#expectcolumntomatchgroupwhenfilteredby)
-- [expectColumnToNotMatch](#expectcolumntonotmatch)
-- [expectTableRowCountToBe](#expecttablerowcounttobe)
-- [expectColumnGroupToBeValue](#expectcolumngrouptobevalue)
-- [expectColumnGroupToBeValues](#expectcolumngrouptobevalues)
-- [expectTableToNotMatch](#expecttabletodotmatch)
-- [expectTableToMatch](#expecttabletomatch)
+- [toHaveTableRowCountGreaterThan](#tohavetablerowcountgreaterthan)
+- [toHaveColumnToBeValue](#tohavecolumntobevalue)
+- [toHaveColumnValuesToMatchRegex](#tohavecolumnvaluestomatchregex)
+- [toHaveColumnValuesToBeInRange](#tohavecolumnvaluestobeeinrange)
+- [toHaveColumnValuesToBeNumbers](#tohavecolumnvaluestobenumbers)
+- [toHaveColumnToMatchWhenFilteredBy](#tohavecolumntomatchwhenfilteredby)
+- [toHaveColumnToMatchGroupWhenFilteredBy](#tohavecolumntomatchgroupwhenfilteredby)
+- [toHaveColumnToNotMatch](#tohavecolumntonotmatch)
+- [toHaveTableRowCount](#tohavetablerowcount)
+- [toHaveColumnGroupToBeValue](#tohavecolumngrouptobevalue)
+- [toHaveColumnGroupToBeValues](#tohavecolumngrouptobeevalues)
+- [toHaveTableToNotMatch](#tohavetabletonotmatch)
+- [toHaveTableToMatch](#tohavetabletomatch)
 
 ### toDataFrame
 
