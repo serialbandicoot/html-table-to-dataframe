@@ -1,78 +1,78 @@
 import { toDataFrame } from '@src/table-data';
 import {
-  expectTableRowCountToBeGreaterThan,
-  expectColumnToBeValue,
-  expectColumnValuesToMatchRegex,
-  expectColumnValuesToBeInRange,
-  expectColumnValuesToBeNumbers,
-  expectColumnToMatchWhenFilteredBy,
-  expectColumnToMatchGroupWhenFilteredBy,
+  toHaveTableRowCountGreaterThan,
+  toHaveColumnToBeValue,
+  toHaveColumnValuesToMatchRegex,
+  toHaveColumnValuesToBeInRange,
+  toHaveColumnValuesToBeNumbers,
+  toHaveColumnToMatchWhenFilteredBy,
+  toHaveColumnToMatchGroupWhenFilteredBy,
   GroupType,
-  expectColumnToNotMatch,
-  expectTableRowCountToBe,
-  expectColumnGroupToBeValue,
-  expectColumnGroupToBeValues,
-  expectTableToNotMatch,
-  expectTableToMatch,
-} from '@src/table-expect';
+  toHaveColumnToNotMatch,
+  toHaveTableRowCount,
+  toHaveColumnGroupToBeValue,
+  toHaveColumnGroupToBeValues,
+  toHaveTableToNotMatch,
+  toHaveTableToMatch,
+} from '@src/table-to-have';
 import { defaultHeaders, getHTMLFile } from './support/utils';
 
-test('should expectTableRowCountToBeGreaterThan', async () => {
+test('should have table row count greater than', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table.html');
 
   // Act
   const dataFrame = toDataFrame(htmlString, defaultHeaders);
 
-  // Act
-  expectTableRowCountToBeGreaterThan(dataFrame, 3);
+  // Assert
+  toHaveTableRowCountGreaterThan(dataFrame, 3);
 });
 
-test('should expectColumnValuesToMatchRegex', async () => {
+test('should have column values matching regex', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table.html');
 
   // Act
   const dataFrame = toDataFrame(htmlString, defaultHeaders);
 
-  // Act
-  expectColumnValuesToMatchRegex(dataFrame, 'Age', '\\d{1,2}');
+  // Assert
+  toHaveColumnValuesToMatchRegex(dataFrame, 'Age', '\\d{1,2}');
 });
 
-test('should expectColumnValuesToBeInRange', async () => {
+test('should have column values in range', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table.html');
 
   // Act
   const dataFrame = toDataFrame(htmlString, defaultHeaders);
 
-  // Act
-  expectColumnValuesToBeInRange(dataFrame, 'Age', 0, 45);
+  // Assert
+  toHaveColumnValuesToBeInRange(dataFrame, 'Age', 0, 45);
 });
 
-test('should expectColumnValuesToBeNumbers', async () => {
+test('should have column values as numbers', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table.html');
 
   // Act
   const dataFrame = toDataFrame(htmlString, defaultHeaders);
 
-  // Act
-  expectColumnValuesToBeNumbers(dataFrame, 'Age');
+  // Assert
+  toHaveColumnValuesToBeNumbers(dataFrame, 'Age');
 });
 
-test('should expectColumnToMatchWhenFilteredBy', async () => {
+test('should have column matching when filtered by', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table.html');
 
   // Act
   const dataFrame = toDataFrame(htmlString, defaultHeaders);
 
-  // Act
-  expectColumnToMatchWhenFilteredBy(dataFrame, 'Age', '22', 'Person', 'Chris');
+  // Assert
+  toHaveColumnToMatchWhenFilteredBy(dataFrame, 'Age', '22', 'Person', 'Chris');
 });
 
-test('should expectColumnToMatchGroupWhenFilteredBy', async () => {
+test('should have column matching group when filtered by', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table.html');
   const group: GroupType[] = [
@@ -83,55 +83,44 @@ test('should expectColumnToMatchGroupWhenFilteredBy', async () => {
   // Act
   const dataFrame = toDataFrame(htmlString, defaultHeaders);
 
-  // Act
-  expectColumnToMatchGroupWhenFilteredBy(dataFrame, 'Age', '22', group);
+  // Assert
+  toHaveColumnToMatchGroupWhenFilteredBy(dataFrame, 'Age', '22', group);
 });
 
-test('should expectColumnToNotMatch', async () => {
+test('should have column not matching', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table.html');
 
   // Act
   const dataFrame = toDataFrame(htmlString, defaultHeaders);
 
-  // Act
-  expectColumnToNotMatch(dataFrame, 'Age', '100');
+  // Assert
+  toHaveColumnToNotMatch(dataFrame, 'Age', '100');
 });
 
-test('should expectTableRowCountToBe', async () => {
+test('should have table row count', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table.html');
 
   // Act
   const dataFrame = toDataFrame(htmlString, defaultHeaders);
 
-  // Act
-  expectTableRowCountToBe(dataFrame, 4);
+  // Assert
+  toHaveTableRowCount(dataFrame, 4);
 });
 
-test('should expectTableRowCountToBe', async () => {
-  // Arrange
-  const htmlString = await getHTMLFile('table.html');
-
-  // Act
-  const dataFrame = toDataFrame(htmlString, defaultHeaders);
-
-  // Act
-  expectTableRowCountToBe(dataFrame, 4);
-});
-
-test('should expectColumnToBeValue', async () => {
+test('should have column value', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table_1_row.html');
 
   // Act
   const dataFrame = toDataFrame(htmlString, defaultHeaders);
 
-  // Act
-  expectColumnToBeValue(dataFrame, 'Person', 'Chris');
+  // Assert
+  toHaveColumnToBeValue(dataFrame, 'Person', 'Chris');
 });
 
-test('should expectColumnGroupToBeValue', async () => {
+test('should have column group value', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table_1_row.html');
   const group: GroupType[] = [
@@ -142,11 +131,11 @@ test('should expectColumnGroupToBeValue', async () => {
   // Act
   const dataFrame = toDataFrame(htmlString, defaultHeaders);
 
-  // Act
-  expectColumnGroupToBeValue(dataFrame, group);
+  // Assert
+  toHaveColumnGroupToBeValue(dataFrame, group);
 });
 
-test('should expectColumnGroupToBeValues', async () => {
+test('should have column group values', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table_2_row.html');
   const groupA: GroupType[] = [
@@ -163,11 +152,11 @@ test('should expectColumnGroupToBeValues', async () => {
   // Act
   const dataFrame = toDataFrame(htmlString, defaultHeaders);
 
-  // Act
-  expectColumnGroupToBeValues(dataFrame, [groupA, groupB]);
+  // Assert
+  toHaveColumnGroupToBeValues(dataFrame, [groupA, groupB]);
 });
 
-test('should expectTableToNotMatch', async () => {
+test('should have table not matching', async () => {
   // Arrange
   const htmlString1 = await getHTMLFile('table_1_row.html');
   const htmlString2 = await getHTMLFile('table_1b_row.html');
@@ -176,11 +165,11 @@ test('should expectTableToNotMatch', async () => {
   const dataFrame1 = toDataFrame(htmlString1, defaultHeaders);
   const dataFrame2 = toDataFrame(htmlString2, defaultHeaders);
 
-  // Act
-  expectTableToNotMatch(dataFrame1, dataFrame2);
+  // Assert
+  toHaveTableToNotMatch(dataFrame1, dataFrame2);
 });
 
-test('should expectTableToMatch', async () => {
+test('should have table matching', async () => {
   // Arrange
   const htmlString1 = await getHTMLFile('table_1_row.html');
   const htmlString2 = await getHTMLFile('table_1_row.html');
@@ -189,6 +178,6 @@ test('should expectTableToMatch', async () => {
   const dataFrame1 = toDataFrame(htmlString1, defaultHeaders);
   const dataFrame2 = toDataFrame(htmlString2, defaultHeaders);
 
-  // Act
-  expectTableToMatch(dataFrame1, dataFrame2);
+  // Assert
+  toHaveTableToMatch(dataFrame1, dataFrame2);
 });

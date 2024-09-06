@@ -1,5 +1,6 @@
 import { JSDOM } from 'jsdom';
 import { buildData } from './table-shared';
+import { TableData } from './types';
 
 /**
  * toDataFrame is a method, which when passed the table element via
@@ -23,7 +24,7 @@ import { buildData } from './table-shared';
  * Call: convertHTMLTable(["one", "col two"])
  */
 
-export function toDataFrame(html: string, headers?: string[]): { [key: string]: string }[] | null {
+export function toDataFrame(html: string, headers?: string[]): TableData {
   const dom = new JSDOM(html);
   const document = dom.window.document;
 
