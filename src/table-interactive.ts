@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom';
-import { LocatorID } from './types';
+import { DataFrame, LocatorID } from './types';
 import { buildData, generateHeaders, validateHeaders } from './table-shared';
 
 /**
@@ -26,7 +26,7 @@ import { buildData, generateHeaders, validateHeaders } from './table-shared';
  * @returns
  */
 
-export function toInteractiveDataFrame(html: string, headers?: string[]): { [key: string]: LocatorID }[] {
+export function toInteractiveDataFrame(html: string, headers?: string[]): DataFrame[] {
   const dom = new JSDOM(html);
   const document = dom.window.document;
 

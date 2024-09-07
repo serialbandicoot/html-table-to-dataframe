@@ -9,3 +9,5 @@ export type LocatorID = {
 export type RowData<T> = {
   [key: string]: T;
 };
+
+export type DataFrame = { [key: string]: LocatorID };
