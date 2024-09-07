@@ -4,4 +4,4 @@ import { toInteractiveDataFrame } from './table-interactive';
 
 export { toPrettyPrint, toDataFrame, toInteractiveDataFrame };
 export * from './table-to-have';
-export * from './types'
+export * from './types';
