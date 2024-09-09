@@ -15,6 +15,7 @@ import {
   toHaveTableToNotMatch,
   toHaveTableToMatch,
   toHaveTableRowCountEqualTo,
+  toHaveTableRowCountLessThan,
 } from '@src/table-to-have';
 import { defaultHeaders, getHTMLFile } from './support/utils';
 
@@ -192,4 +193,15 @@ test('should have table row count equal to', async () => {
 
   // Assert
   toHaveTableRowCountEqualTo(dataFrame, 4);
+});
+
+test('should have table row less than', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table.html');
+
+  // Act
+  const dataFrame = toDataFrame(htmlString);
+
+  // Assert
+  toHaveTableRowCountLessThan(dataFrame, 4);
 });

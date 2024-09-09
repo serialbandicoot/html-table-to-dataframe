@@ -13,8 +13,26 @@ import { TableData } from './types';
  * toHaveTableRowCountGreaterThan(dt, 3) will fail because the row count is 2.
  */
 export const toHaveTableRowCountGreaterThan = (tableData: TableData, expectedLength: number) => {
-  if (tableData.length <= expectedLength) {
+  if (tableData.length < expectedLength) {
     throw new Error(`Expected row count to be greater than ${expectedLength}, but it was ${tableData.length}.`);
+  }
+};
+
+/**
+ * toHaveTableRowCountLessThan expects a tableData as processed by convertHTMLTable.
+ * The assertion checks that the total row count of the table is less than than the expected value.
+ *
+ * Example:
+ *
+ * | one | two |
+ * | 1   | 3   |
+ * | 2   | 100 |
+ *
+ * toHaveTableRowCountLessThan(dt, 1) will fail because the row count is 2.
+ */
+export const toHaveTableRowCountLessThan = (tableData: TableData, expectedLength: number) => {
+  if (tableData.length > expectedLength) {
+    throw new Error(`Expected row count to be less than ${expectedLength}, but it was ${tableData.length}.`);
   }
 };
 

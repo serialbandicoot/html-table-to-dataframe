@@ -305,7 +305,7 @@ toHaveTableToMatch(tableData1, tableData2);
 
 Check the length of the table is equal to
 
-#### toHaveTableRowCountEqualTo(tableData, );
+#### toHaveTableRowCountEqualTo(tableData, expectedLength);
 
 ```typescript
 const tableData = [
@@ -313,7 +313,22 @@ const tableData = [
   { col_1: '2', col_2: '4' }
 ];
 
-toHaveTableRowCountEqualTo(tableData1, 3);
+toHaveTableRowCountEqualTo(tableData, 3);
 // Fails, as the tables are length of 2
 ```
 
+### toHaveTableRowCountLessThan
+
+Check the length of the table is equal to
+
+#### toHaveTableRowCountLessThan(tableData, expectedLength);
+
+```typescript
+const tableData = [
+  { col_1: '1', col_2: '3' },
+  { col_1: '2', col_2: '4' }
+];
+
+toHaveTableRowCountLessThan(tableData, 1);
+// Fails, as the tables are length of 2
+```
