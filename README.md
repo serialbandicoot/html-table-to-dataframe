@@ -162,7 +162,7 @@ Uses an array of `GroupType` to check if a target column/value pair exists when 
 ```typescript
 type GroupType = {
   filterColumn: string;
-  filterValue: Nullable<string>;
+  filterValue: string;
 };
 
 const tableData = [

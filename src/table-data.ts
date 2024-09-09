@@ -69,11 +69,12 @@ export function toDataFrame(html: string, headers?: string[]): TableData {
  * @returns {string[]} - An array of header names, with empty headers replaced by 'unknownX'.
  */
 function generateHeaders(document: Document): string[] {
-  const headerElements = Array.from(document.querySelectorAll('table thead th'));
+  // Select both <th> and <td> elements within <thead>
+  const headerElements = Array.from(document.querySelectorAll('table thead th, table thead td'));
   let unknownCount = 0;
 
-  return headerElements.map((th) => {
-    const text = th.textContent?.trim();
+  return headerElements.map((element) => {
+    const text = element.textContent?.trim();
     if (text && text !== '') {
       return text;
     } else {
@@ -91,7 +92,7 @@ function generateHeaders(document: Document): string[] {
  */
 
 function validateHeaders(headers: string[], document: Document): void {
-  const columnCount = document.querySelectorAll('table thead th').length;
+  const columnCount = document.querySelectorAll('table thead th, , table thead td').length;
   if (headers.length !== columnCount) {
     throw new Error(
       `The number of provided headers (${headers.length}) does not match the number of columns in the table (${columnCount}).`,
