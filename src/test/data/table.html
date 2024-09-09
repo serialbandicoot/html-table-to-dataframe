@@ -1,40 +1,40 @@
-<table>
-    <caption>
-      Front-end web developer course 2021
-    </caption>
-    <thead>
-      <tr>
-        <th scope="col">Person</th>
-        <th scope="col">Likes</th>
-        <th scope="col">Age</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">Chris</th>
-        <td>HTML tables</td>
-        <td>22</td>
-      </tr>
-      <tr>
-        <th scope="row">Dennis</th>
-        <td>Web accessibility</td>
-        <td>45</td>
-      </tr>
+<table data-testid="table1">
+  <caption>
+    Front-end web developer course 2021
+  </caption>
+  <thead>
+    <tr data-test-id="header-row">
+      <th scope="col" data-testid="header-person">Person</th>
+      <th scope="col" data-test-id="header-likes">Likes</th>
+      <th scope="col" data-testid="header-age">Age</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr data-test-id="row-1">
+      <th scope="row" data-testid="person-1">Chris</th>
+      <td data-test-id="likes-1">HTML tables</td>
+      <td data-testid="age-1">22</td>
+    </tr>
+    <tr data-testid="row-2">
+      <th scope="row" data-test-id="person-2">Dennis</th>
+      <td data-testid="likes-2">Web accessibility</td>
+      <td data-test-id="age-2">45</td>
+    </tr>
       <tr>
         <th scope="row">Sarah</th>
         <td>JavaScript frameworks</td>
         <td>29</td>
       </tr>
-      <tr>
-        <th scope="row">Karen</th>
-        <td>Web performance</td>
-        <td>36</td>
-      </tr>
-    </tbody>
-    <tfoot>
-      <tr>
-        <th scope="row" colspan="2">Average age</th>
-        <td>33</td>
-      </tr>
-    </tfoot>
-  </table>
+    <tr data-testid="row-4">
+      <th scope="row" data-test-id="person-4">Karen</th>
+      <td data-testid="likes-4">Web performance</td>
+      <td data-test-id="age-4">36</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr data-testid="footer-row">
+      <th scope="row" colspan="2" data-test-id="footer-average">Average age</th>
+      <td data-testid="footer-age">33</td>
+    </tr>
+  </tfoot>
+</table>

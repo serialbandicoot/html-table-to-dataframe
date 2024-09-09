@@ -1,8 +1,11 @@
 export type TableData = { [key: string]: string }[];
 
+export type Attributes = {
+  [key: string]: string;
+};
+
 export type LocatorID = {
-  id: string;
-  value: string;
+  attributes: Attributes;
   type: string;
 };
 

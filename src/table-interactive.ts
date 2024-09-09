@@ -44,44 +44,53 @@ export function toInteractiveDataFrame(html: string, headers?: string[]): DataFr
     validateHeaders(headers, document);
   }
 
-  // Now focus only on the rows inside the tbody
+  // Focus on rows inside the tbody
   const rows = Array.from(tbody.querySelectorAll('tr')).map((row) => {
     return Array.from(row.querySelectorAll('td')).map((cell) => {
       const queryOnElements = 'textarea, input, button, mat-select, mat-icon, mat-slide-toggle, select';
-      const control = cell.querySelectorAll(queryOnElements);
+      const control = cell.querySelector(queryOnElements);
 
-      if (control.length > 0) {
-        const element = control[0];
+      if (control) {
         let type = '';
 
-        if (element.tagName === 'SELECT') {
-          // Handle <select> elements
-          const selectElement = element as HTMLSelectElement;
-          const selectedOption = selectElement.querySelector('option:checked') as HTMLOptionElement;
-          const value = selectedOption ? selectedOption.value : '';
+        // Determine the type based on the tagName
+        if (control.tagName === 'SELECT') {
           type = 'select';
-          return { id: 'value', value: value, type: type } as LocatorID;
-        } else if (element.tagName === 'TEXTAREA') {
+        } else if (control.tagName === 'TEXTAREA') {
           type = 'textarea';
-          return { id: 'value', value: (element as HTMLTextAreaElement).value, type: type } as LocatorID;
-        } else if (element.tagName === 'INPUT') {
+        } else if (control.tagName === 'INPUT') {
           type = 'input';
-          return { id: 'value', value: (element as HTMLInputElement).value, type: type } as LocatorID;
         }
 
-        // Extract each attribute and prefer data-test-id if available
-        const attrId = element.getAttribute('id');
-        const dataTestId = element.getAttribute('data-test-id');
-
-        if (dataTestId) {
-          return { id: 'data-test-id', value: dataTestId, type: type } as LocatorID;
-        }
-        return { id: 'id', value: attrId || '', type: 'unknown' } as LocatorID;
+        // Use extractLocatorID to get all attributes
+        return extractLocatorID(control, type);
       }
 
-      return { id: 'id', value: cell.getAttribute('id') || '', type: 'unknown' } as LocatorID;
+      // Return a LocatorID for cells without controls
+      return extractLocatorID(cell, 'unknown');
     });
   });
 
   return buildData<LocatorID>(rows, headers);
+}
+
+/**
+ * Extracts all attributes from a DOM element.
+ *
+ * @param element - The DOM element from which to extract the attributes.
+ * @param type - The type of the element (e.g., 'select', 'input', 'textarea').
+ * @returns A LocatorID object containing all attributes as key-value pairs and the element type.
+ */
+function extractLocatorID(element: Element, type: string): LocatorID {
+  const attributes: { [key: string]: string } = {};
+
+  // Extract all attributes as key-value pairs
+  Array.from(element.attributes).forEach((attr) => {
+    attributes[attr.name] = attr.value;
+  });
+
+  return {
+    attributes,
+    type: type || 'unknown',
+  };
 }
