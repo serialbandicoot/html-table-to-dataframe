@@ -94,7 +94,7 @@ test('should validate inaccurate provided header length', async () => {
 test('should handle when td used instead of th in header row', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table_bad_header.html');
-  const expectedWithTDs = [{Person: 'Chris', Likes: 'HTML tables', Age: '22'}]
+  const expectedWithTDs = [{ Person: 'Chris', Likes: 'HTML tables', Age: '22' }];
 
   // Act
   const dataFrame = toDataFrame(htmlString);
@@ -106,10 +106,10 @@ test('should handle when td used instead of th in header row', async () => {
 test('should handle when td used instead of th in header row using custom header', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table_bad_header.html');
-  const expectedWithTDs = [{a: 'Chris', b: 'HTML tables', c: '22'}]
+  const expectedWithTDs = [{ a: 'Chris', b: 'HTML tables', c: '22' }];
 
   // Act
-  const dataFrame = toDataFrame(htmlString, ["a", "b", "c"]);
+  const dataFrame = toDataFrame(htmlString, ['a', 'b', 'c']);
 
   // Assert
   expect(dataFrame).toEqual(expectedWithTDs);
