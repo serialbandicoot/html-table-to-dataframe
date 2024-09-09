@@ -19,6 +19,24 @@ export const toHaveTableRowCountGreaterThan = (tableData: TableData, expectedLen
 };
 
 /**
+ * toHaveTableRowCountEqualTo expects a tableData as processed by convertHTMLTable.
+ * The assertion checks that the total row count of the table equal to the the expected value.
+ *
+ * Example:
+ *
+ * | one | two |
+ * | 1   | 3   |
+ * | 2   | 100 |
+ *
+ * toHaveTableRowCountEqualTo(dt, 3) will fail because the row count is 2.
+ */
+export const toHaveTableRowCountEqualTo = (tableData: TableData, expectedLength: number) => {
+  if (tableData.length !== expectedLength) {
+    throw new Error(`Expected row count should ${expectedLength}, but it was ${tableData.length}.`);
+  }
+};
+
+/**
  * toHaveColumnValuesToMatchRegex expects tableData as processed by convertHTMLTable.
  * The assertion will check that the values in the specified column match the given regular expression pattern.
  *

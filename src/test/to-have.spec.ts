@@ -14,6 +14,7 @@ import {
   toHaveColumnGroupToBeValues,
   toHaveTableToNotMatch,
   toHaveTableToMatch,
+  toHaveTableRowCountEqualTo,
 } from '@src/table-to-have';
 import { defaultHeaders, getHTMLFile } from './support/utils';
 
@@ -180,4 +181,15 @@ test('should have table matching', async () => {
 
   // Assert
   toHaveTableToMatch(dataFrame1, dataFrame2);
+});
+
+test('should have table row count equal to', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table.html');
+
+  // Act
+  const dataFrame = toDataFrame(htmlString);
+
+  // Assert
+  toHaveTableRowCountEqualTo(dataFrame, 4);
 });

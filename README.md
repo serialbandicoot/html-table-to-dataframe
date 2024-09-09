@@ -300,3 +300,20 @@ const tableData2 = [
 toHaveTableToMatch(tableData1, tableData2);
 // Fails, as the two tables are different
 ```
+
+### toHaveTableRowCountEqualTo
+
+Check the length of the table is equal to
+
+#### toHaveTableRowCountEqualTo(tableData, );
+
+```typescript
+const tableData = [
+  { col_1: '1', col_2: '3' },
+  { col_1: '2', col_2: '4' }
+];
+
+toHaveTableRowCountEqualTo(tableData1, 3);
+// Fails, as the tables are length of 2
+```
+
