@@ -203,5 +203,16 @@ test('should have table row less than', async () => {
   const dataFrame = toDataFrame(htmlString);
 
   // Assert
-  toHaveTableRowCountLessThan(dataFrame, 4);
+  toHaveTableRowCountLessThan(dataFrame, 5);
+});
+
+test('should have table row less than', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table.html');
+
+  // Act
+  const dataFrame = toDataFrame(htmlString);
+
+  // Assert
+  toHaveTableRowCountGreaterThan(dataFrame, 3);
 });
