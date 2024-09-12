@@ -27,8 +27,8 @@ export function toDataFrame(html: string, headers?: string[]): TableData {
   const dom = new JSDOM(html);
   const document = dom.window.document;
 
-  if (!html || html === "") {
-    throw new Error("HTML cannot be empty");
+  if (!html || html === '') {
+    throw new Error('HTML cannot be empty');
   }
 
   if (!headers || headers.length === 0) {
