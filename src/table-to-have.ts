@@ -1,10 +1,10 @@
 import { TableData } from './types';
 
 /**
- * toHaveTableRowCountGreaterThan expects a tableData as processed by convertHTMLTable.
+ * toHaveTableRowCountGreaterThan expects a tableData as processed by toDataFrame.
  * The assertion checks that the total row count of the table is greater than the expected value.
  *
- * Example:
+ * @Example:
  *
  * | one | two |
  * | 1   | 3   |
@@ -19,7 +19,7 @@ export const toHaveTableRowCountGreaterThan = (tableData: TableData, expectedLen
 };
 
 /**
- * toHaveTableRowCountLessThan expects a tableData as processed by convertHTMLTable.
+ * toHaveTableRowCountLessThan expects a tableData as processed by toDataFrame.
  * The assertion checks that the total row count of the table is less than than the expected value.
  *
  * Example:
@@ -262,7 +262,7 @@ export const toHaveColumnToNotMatch = (tableData: TableData, targetColumn: strin
  * toHaveTableRowCount expects a tableData as processed by convertHTMLTable().
  * The expectation will match the row count.
  *
- * Example:
+ * @Example:
  * | col_1 | col_2 |
  * | ------| ----- |
  * | 1     | 3     |

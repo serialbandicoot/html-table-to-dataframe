@@ -114,3 +114,15 @@ test('should handle when td used instead of th in header row using custom header
   // Assert
   expect(dataFrame).toEqual(expectedWithTDs);
 });
+
+test('should handle oddities in the header names', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table_header_oddities.html');
+  const expectedWithHeaderOdds = [{ "Pers on": 'Chris', "Lik es": 'HTML tables', "A@ge#": '22' }];
+
+  // Act
+  const dataFrame = toDataFrame(htmlString);
+
+  // Assert
+  expect(dataFrame).toEqual(expectedWithHeaderOdds);
+});

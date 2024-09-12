@@ -27,6 +27,10 @@ export function toDataFrame(html: string, headers?: string[]): TableData {
   const dom = new JSDOM(html);
   const document = dom.window.document;
 
+  if (!html || html === "") {
+    throw new Error("HTML cannot be empty");
+  }
+
   if (!headers || headers.length === 0) {
     headers = generateHeaders(document);
   } else {
@@ -74,7 +78,9 @@ function generateHeaders(document: Document): string[] {
   let unknownCount = 0;
 
   return headerElements.map((element) => {
-    const text = element.textContent?.trim();
+    // Clean the text content of the header element
+    const text = cleanHeaderText(element.textContent || '');
+
     if (text && text !== '') {
       return text;
     } else {
@@ -98,6 +104,15 @@ function validateHeaders(headers: string[], document: Document): void {
       `The number of provided headers (${headers.length}) does not match the number of columns in the table (${columnCount}).`,
     );
   }
+}
+
+/**
+ * Cleans header text by replacing newlines and multiple spaces with a single space.
+ * @param text - The raw text extracted from the header element (th or td).
+ * @returns A cleaned string with normalized spaces and no line breaks.
+ */
+function cleanHeaderText(text: string): string {
+  return text.replace(/\s+/g, ' ').trim();
 }
 
 export interface RowData<T> {
