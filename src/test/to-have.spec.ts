@@ -16,6 +16,7 @@ import {
   toHaveTableToMatch,
   toHaveTableRowCountEqualTo,
   toHaveTableRowCountLessThan,
+  toHaveColumnValuesInSet,
 } from '../table-to-have';
 import { defaultHeaders, getHTMLFile } from './support/utils';
 
@@ -215,4 +216,17 @@ test('should have table row less than', async () => {
 
   // Assert
   toHaveTableRowCountGreaterThan(dataFrame, 3);
+});
+
+test('should have all Likes in the provided set', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table.html');
+
+  // Act
+  const dataFrame = toDataFrame(htmlString);
+
+  const allowedLikesSet = new Set(['HTML tables', 'Web accessibility', 'JavaScript frameworks', 'Web performance']);
+
+  // Assert
+  toHaveColumnValuesInSet(dataFrame, 'Likes', allowedLikesSet);
 });

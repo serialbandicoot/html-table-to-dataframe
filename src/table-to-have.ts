@@ -4,7 +4,7 @@ import { TableData } from './types';
  * toHaveTableRowCountGreaterThan expects a tableData as processed by toDataFrame.
  * The assertion checks that the total row count of the table is greater than the expected value.
  *
- * @Example:
+ * @example:
  *
  * | one | two |
  * | 1   | 3   |
@@ -22,7 +22,7 @@ export const toHaveTableRowCountGreaterThan = (tableData: TableData, expectedLen
  * toHaveTableRowCountLessThan expects a tableData as processed by toDataFrame.
  * The assertion checks that the total row count of the table is less than than the expected value.
  *
- * Example:
+ * @example:
  *
  * | one | two |
  * | 1   | 3   |
@@ -57,7 +57,7 @@ export const toHaveTableRowCountEqualTo = (tableData: TableData, expectedLength:
  * toHaveColumnValuesToMatchRegex expects tableData as processed by convertHTMLTable.
  * The assertion will check that the values in the specified column match the given regular expression pattern.
  *
- * Example:
+ * @example:
  *
  * | one | two |
  * | 1   | 3   |
@@ -85,7 +85,7 @@ export const toHaveColumnValuesToMatchRegex = (tableData: TableData, columnHeade
  * toHaveColumnValuesToBeInRange expects tableData as processed by convertHTMLTable.
  * The assertion checks that the values in the specified column fall within the given range.
  *
- * Example:
+ * @example:
  *
  * | one | two |
  * | 1   | 3   |
@@ -138,7 +138,7 @@ export const toHaveColumnValuesToBeNumbers = (tableData: TableData, columnHeader
  * This assertion checks whether a target column/value pair exists when filtered by a specified column/value.
  * It also does not validate the correctness of column names.
  *
- * Example:
+ * @example:
  * | col_1 | col_2 |
  * | ------| ----- |
  * | 1     | 3     |
@@ -196,7 +196,7 @@ export type GroupType = {
  * toHaveColumnToMatchGroupWhenFilteredBy uses an array of types GroupType
  * to cycle through and pass the items to toHaveColumnToMatchWhenFilteredBy.
  *
- * Example:
+ * @example:
  *
  * | col_1 | col_2 | col_3 |
  * | ------| ----- | ----- |
@@ -232,7 +232,7 @@ export const toHaveColumnToMatchGroupWhenFilteredBy = (
  * expectation is designed around checking a row is no longer available. Such
  * as when a record has been deleted or archived.
  *
- * Example:
+ * @example:
  * | col_1 | col_2 |
  * | ------| ----- |
  * | 1     | 3     |
@@ -261,7 +261,7 @@ export const toHaveColumnToNotMatch = (tableData: TableData, targetColumn: strin
  * toHaveTableRowCount expects a tableData as processed by convertHTMLTable().
  * The expectation will match the row count.
  *
- * @Example:
+ * @example:
  * | col_1 | col_2 |
  * | ------| ----- |
  * | 1     | 3     |
@@ -281,7 +281,7 @@ export const toHaveTableRowCount = (tableData: TableData, expectedLength: number
  * toHaveColumnToBeValue expects only 1 table row and
  * the column value should match the provided value.
  *
- * Example:
+ * @example:
  * | col_1 | col_2 |
  * | ------| ----- |
  * | 1     | 3     |
@@ -305,7 +305,7 @@ export const toHaveColumnToBeValue = (tableData: TableData, column: string, valu
  * the column value in a group should match the provided.
  * Exceptions are made when the filterValue is null/undefined.
  *
- * Example:
+ * @example:
  * | col_1 | col_2 |
  * | ------| ----- |
  * | 1     | 3     |
@@ -351,7 +351,7 @@ export const toHaveColumnGroupToBeValues = (tableData: TableData, filterGroups: 
  * @param tableData1
  * @param tableData2
  *
- * Example:
+ * @example:
  *
  * table1: | col_1 | col_2 | table2: | col_1 | col_2 |
  *         | ------| ----- |         | ------| ----- |
@@ -399,7 +399,7 @@ export const toHaveTableToNotMatch = (tableData1: TableData, tableData2: TableDa
  * @param tableData1
  * @param tableData2
  *
- * Example:
+ * @example:
  *
  * table1: | col_1 | col_2 | table2: | col_1 | col_2 |
  *         | ------| ----- |         | ------| ----- |
@@ -438,4 +438,40 @@ export const toHaveTableToMatch = (tableData1: TableData, tableData2: TableData)
   if (stringTable1 !== stringTable2) {
     throw new Error('Tables are different');
   }
+};
+
+/**
+ * toHaveColumnValuesInSet
+ *
+ * Asserts that all values in a specified column of table data match a set of valid values.
+ * Throws an error if any value in the column is not in the provided set.
+ *
+ * @param tableData - Array of rows, each represented as an object with key-value pairs.
+ * @param columnHeader - The column header to check. Must be a key in `tableData`.
+ * @param targetSet - A Set of valid values for the column.
+ *
+ * @throws Error - If any value in the column is not in `targetSet`.
+ *
+ * @example
+ *
+ * | col_1 | col_2 |
+ * | ------| ----- |
+ * | 1     | 3     |
+ * | 2     | 1e    |
+ *
+ * const set: Set<string> = new Set(["1", "2", "3"]);
+ * toHaveColumnValuesInSet(dataFrame, "col_2", set);
+ * // Throws an error because "1e" is not in the set {"1", "2", "3"}
+ */
+export const toHaveColumnValuesInSet = (
+  tableData: { [key: string]: string }[],
+  columnHeader: string,
+  targetSet: Set<string>,
+) => {
+  tableData.forEach((row) => {
+    const cellValue = row[columnHeader];
+    if (cellValue !== undefined && !targetSet.has(cellValue)) {
+      throw new Error(`Column "${columnHeader}" has a value "${cellValue}" which is not in the expected set.`);
+    }
+  });
 };
