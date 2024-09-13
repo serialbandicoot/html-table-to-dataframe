@@ -1,5 +1,5 @@
-import { toPrettyPrint } from '@src/table-pretty';
-import { toDataFrame } from '@src/table-data';
+import { toPrettyPrint } from '../table-pretty';
+import { toDataFrame } from '../table-data';
 import { defaultHeaders, getHTMLFile } from './support/utils';
 
 test('should convert data frame to pretty table and output correct format', async () => {

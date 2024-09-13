@@ -1,4 +1,4 @@
-import { toDataFrame } from '@src/table-data';
+import { toDataFrame } from '../table-data';
 import { defaultHeaders, getHTMLFile } from './support/utils';
 
 const expectedData = [

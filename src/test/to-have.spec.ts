@@ -1,4 +1,4 @@
-import { toDataFrame } from '@src/table-data';
+import { toDataFrame } from '../table-data';
 import {
   toHaveTableRowCountGreaterThan,
   toHaveColumnToBeValue,
@@ -16,7 +16,7 @@ import {
   toHaveTableToMatch,
   toHaveTableRowCountEqualTo,
   toHaveTableRowCountLessThan,
-} from '@src/table-to-have';
+} from '../table-to-have';
 import { defaultHeaders, getHTMLFile } from './support/utils';
 
 test('should have table row count greater than', async () => {

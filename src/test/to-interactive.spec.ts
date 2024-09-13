@@ -1,4 +1,4 @@
-import { toInteractiveDataFrame } from '@src/table-interactive';
+import { toInteractiveDataFrame } from '../table-interactive';
 
 import { getHTMLFile } from './support/utils';
 test('should get an interactive table', async () => {
