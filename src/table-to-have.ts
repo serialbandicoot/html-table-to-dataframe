@@ -69,11 +69,9 @@ export const toHaveTableRowCountEqualTo = (tableData: TableData, expectedLength:
  */
 export const toHaveColumnValuesToMatchRegex = (tableData: TableData, columnHeader: string, regexPattern: string) => {
   if (!tableData || tableData.length === 0) {
-    throw new Error(
-      "TableData cannot be empty",
-    );
+    throw new Error('TableData cannot be empty');
   }
-  
+
   // Create a regular expression object from the regexPattern string
   const regex = new RegExp(regexPattern);
 
@@ -89,7 +87,7 @@ export const toHaveColumnValuesToMatchRegex = (tableData: TableData, columnHeade
 
 /**
  * toHaveColumnsValuesToMatchRegex expects tableData as processed by convertHTMLTable.
- * The assertion will check each column that the values in the specified column match the 
+ * The assertion will check each column that the values in the specified column match the
  * given regular expression pattern.
  *
  * @example:
@@ -104,15 +102,12 @@ export const toHaveColumnValuesToMatchRegex = (tableData: TableData, columnHeade
  */
 export const toHaveColumnsValuesToMatchRegex = (tableData: TableData, columnHeaders: string[], regexPattern: string) => {
   if (columnHeaders.length === 0) {
-    throw new Error(
-      "Columns cannot be empty",
-    );
+    throw new Error('Columns cannot be empty');
   }
-  
-  columnHeaders.forEach(column => {
-    toHaveColumnValuesToMatchRegex(tableData, column, regexPattern)
-  })
-  
+
+  columnHeaders.forEach((column) => {
+    toHaveColumnValuesToMatchRegex(tableData, column, regexPattern);
+  });
 };
 
 /**

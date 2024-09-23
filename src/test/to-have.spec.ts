@@ -41,8 +41,8 @@ test('should have column values matching regex', async () => {
 
   // Assert
   toHaveColumnValuesToMatchRegex(dataFrame, 'Age', '\\d{1,2}');
-  toHaveColumnValuesToMatchRegex(dataFrame, 'Percent1', "^(100|[1-9]?[0-9])%$");
-  toHaveColumnsValuesToMatchRegex(dataFrame, ["Percent1", "Percent2"], "^(100|[1-9]?[0-9])%$")
+  toHaveColumnValuesToMatchRegex(dataFrame, 'Percent1', '^(100|[1-9]?[0-9])%$');
+  toHaveColumnsValuesToMatchRegex(dataFrame, ['Percent1', 'Percent2'], '^(100|[1-9]?[0-9])%$');
 });
 
 test('should have column values in range', async () => {
