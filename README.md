@@ -48,6 +48,7 @@ await toPrettyPrint(data);
 - [toHaveTableRowCountGreaterThan](#tohavetablerowcountgreaterthan)
 - [toHaveColumnToBeValue](#tohavecolumntobevalue)
 - [toHaveColumnValuesToMatchRegex](#tohavecolumnvaluestomatchregex)
+- [toHaveColumnsValuesToMatchRegex](#tohavecolumnsvaluestomatchregex)
 - [toHaveColumnValuesToBeInRange](#tohavecolumnvaluestobeeinrange)
 - [toHaveColumnValuesToBeNumbers](#tohavecolumnvaluestobenumbers)
 - [toHaveColumnToMatchWhenFilteredBy](#tohavecolumntomatchwhenfilteredby)
@@ -92,7 +93,7 @@ const tableData = [
 toHaveTableRowCountGreaterThan(tableData, 3); // Fails, as row count is 2
 ```
 
-### toHaveColumnValuesToMatchRegex
+### toHaveColumnValuesToMatchRegex & toHaveColumnsValuesToMatchRegex
 
 Checks if the values in the specified column match the given regular expression pattern.
 
@@ -105,6 +106,7 @@ const tableData = [
 ];
 
 toHaveColumnValuesToMatchRegex(tableData, "two", "\\d\\d"); // Fails, as {"two":"100"} has 3 digits
+toHaveColumnsValuesToMatchRegex(tableData, ["one", "two"], "\\d\\d"); // Fails, as {"two":"100"} has 3 digits
 ```
 
 ### toHaveColumnValuesToBeInRange

@@ -17,6 +17,7 @@ import {
   toHaveTableRowCountEqualTo,
   toHaveTableRowCountLessThan,
   toHaveColumnValuesInSet,
+  toHaveColumnsValuesToMatchRegex,
 } from '../table-to-have';
 import { defaultHeaders, getHTMLFile } from './support/utils';
 
@@ -33,13 +34,15 @@ test('should have table row count greater than', async () => {
 
 test('should have column values matching regex', async () => {
   // Arrange
-  const htmlString = await getHTMLFile('table.html');
+  const htmlString = await getHTMLFile('table_regex.html');
 
   // Act
-  const dataFrame = toDataFrame(htmlString, defaultHeaders);
+  const dataFrame = toDataFrame(htmlString);
 
   // Assert
   toHaveColumnValuesToMatchRegex(dataFrame, 'Age', '\\d{1,2}');
+  toHaveColumnValuesToMatchRegex(dataFrame, 'Percent1', "^(100|[1-9]?[0-9])%$");
+  toHaveColumnsValuesToMatchRegex(dataFrame, ["Percent1", "Percent2"], "^(100|[1-9]?[0-9])%$")
 });
 
 test('should have column values in range', async () => {

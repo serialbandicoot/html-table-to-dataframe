@@ -68,6 +68,12 @@ export const toHaveTableRowCountEqualTo = (tableData: TableData, expectedLength:
  * "Write Once, Never Read" - Use sparingly, add expectations where RegExs can be replaced.
  */
 export const toHaveColumnValuesToMatchRegex = (tableData: TableData, columnHeader: string, regexPattern: string) => {
+  if (!tableData || tableData.length === 0) {
+    throw new Error(
+      "TableData cannot be empty",
+    );
+  }
+  
   // Create a regular expression object from the regexPattern string
   const regex = new RegExp(regexPattern);
 
@@ -79,6 +85,34 @@ export const toHaveColumnValuesToMatchRegex = (tableData: TableData, columnHeade
       );
     }
   }
+};
+
+/**
+ * toHaveColumnsValuesToMatchRegex expects tableData as processed by convertHTMLTable.
+ * The assertion will check each column that the values in the specified column match the 
+ * given regular expression pattern.
+ *
+ * @example:
+ *
+ * | one | two |
+ * | 1   | 3   |
+ * | 2   | 100 |
+ *
+ * toHaveColumnsValuesToMatchRegex(dt, ["one", "two"], "\\d\\d") will fail because {"two":"100"} has 3 digits.
+ *
+ * "Write Once, Never Read" - Use sparingly, add expectations where RegExs can be replaced.
+ */
+export const toHaveColumnsValuesToMatchRegex = (tableData: TableData, columnHeaders: string[], regexPattern: string) => {
+  if (columnHeaders.length === 0) {
+    throw new Error(
+      "Columns cannot be empty",
+    );
+  }
+  
+  columnHeaders.forEach(column => {
+    toHaveColumnValuesToMatchRegex(tableData, column, regexPattern)
+  })
+  
 };
 
 /**
