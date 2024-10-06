@@ -130,3 +130,6 @@ dist
 .pnp.*
 
 src/.DS_Store
+
+# JetBrains project file
+.idea

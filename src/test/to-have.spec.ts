@@ -233,3 +233,17 @@ test('should have all Likes in the provided set', async () => {
   // Assert
   toHaveColumnValuesInSet(dataFrame, 'Likes', allowedLikesSet);
 });
+
+test('should throw error when asserting column values in set for non-existent column', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table.html');
+
+  // Act
+  const dataFrame = toDataFrame(htmlString);
+
+  const allowedLikesSet = new Set(['HTML tables', 'Web accessibility', 'JavaScript frameworks', 'Web performance']);
+  const expectedError = `Column header "Non-existent Column" was not found in row ${JSON.stringify(dataFrame[0])}`;
+
+  // Assert
+  expect(() => toHaveColumnValuesInSet(dataFrame, 'Non-existent Column', allowedLikesSet)).toThrow(expectedError);
+});
