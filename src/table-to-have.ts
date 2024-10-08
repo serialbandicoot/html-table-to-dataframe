@@ -473,12 +473,14 @@ export const toHaveTableToMatch = (tableData1: TableData, tableData2: TableData)
  * toHaveColumnValuesInSet
  *
  * Asserts that all values in a specified column of table data match a set of valid values.
+ * Throws an error if the column header does not exist in a table row.
  * Throws an error if any value in the column is not in the provided set.
  *
  * @param tableData - Array of rows, each represented as an object with key-value pairs.
  * @param columnHeader - The column header to check. Must be a key in `tableData`.
  * @param targetSet - A Set of valid values for the column.
  *
+ * @throws Error - If the column header is not in a `tableData` row.
  * @throws Error - If any value in the column is not in `targetSet`.
  *
  * @example
@@ -498,8 +500,13 @@ export const toHaveColumnValuesInSet = (
   targetSet: Set<string>,
 ) => {
   tableData.forEach((row) => {
+    if (!(columnHeader in row)) {
+      throw new Error(`Column header "${columnHeader}" was not found in row ${JSON.stringify(row)}`);
+    }
+
     const cellValue = row[columnHeader];
-    if (cellValue !== undefined && !targetSet.has(cellValue)) {
+
+    if (!targetSet.has(cellValue)) {
       throw new Error(`Column "${columnHeader}" has a value "${cellValue}" which is not in the expected set.`);
     }
   });

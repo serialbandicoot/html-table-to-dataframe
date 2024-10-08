@@ -31,8 +31,11 @@ jobs:
       - name: Run TypeScript compilation
         run: npm run build
 
+      - name: Run eslint & prettier
+        run: npm run lint && npm run format:check
+
       - name: Run tests
-        run: npm run test   
+        run: npm run test
 
       - name: Upload Jest coverage report
         if: success()
