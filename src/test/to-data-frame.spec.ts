@@ -19,6 +19,46 @@ test('should convert HTML table to data frame with simple table markup', async (
   expect(dataFrame).toEqual(expectedData);
 });
 
+test('should convert HTML table and use simple footer', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table.html');
+
+  // Act
+  const dataFrame = toDataFrame(htmlString, { footer: true });
+
+  // Assert
+  expect(dataFrame).toEqual([{ 'Average age': '33' }]);
+});
+
+test('should convert HTML table and use complex footer', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table_footer.html');
+  const headers = ['Header 1', 'Header 2', 'Header 3'];
+  const expectedData = [
+    {
+      'Header 1': 'Footer 1, Cell 1',
+      'Header 2': 'Footer 1, Cell 2',
+      'Header 3': 'Footer 1, Cell 3',
+    },
+    {
+      'Header 1': 'Footer 2, Cell 1',
+      'Header 2': 'Footer 2, Cell 2',
+      'Header 3': 'Footer 2, Cell 3',
+    },
+    {
+      'Header 1': 'Footer 3, Cell 1',
+      'Header 2': 'Footer 3, Cell 2',
+      'Header 3': 'Footer 3, Cell 3',
+    },
+  ];
+
+  // Act
+  const dataFrame = toDataFrame(htmlString, { footer: true, header: headers });
+
+  // Assert
+  expect(dataFrame).toEqual(expectedData);
+});
+
 test('should return an empty object from no rows', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table_empty.html');
@@ -35,7 +75,7 @@ test('should convert HTML table to data frame with input fields in table markup'
   const htmlString = await getHTMLFile('table_input.html');
 
   // Act
-  const dataFrame = toDataFrame(htmlString, defaultHeaders);
+  const dataFrame = toDataFrame(htmlString, { header: defaultHeaders });
 
   // Assert
   expect(dataFrame).toEqual(expectedData);
@@ -47,7 +87,7 @@ test('should convert HTML table using my own headers', async () => {
   const expectedWithProvidedKeys = [{ a: 'Chris', '*b': 'HTML tables', c: '22' }];
 
   // Act
-  const dataFrame = toDataFrame(htmlString, ['a', '*b', 'c']);
+  const dataFrame = toDataFrame(htmlString, { header: ['a', '*b', 'c'] });
 
   // Assert
   expect(dataFrame).toEqual(expectedWithProvidedKeys);
@@ -58,7 +98,7 @@ test('should convert HTML table to data frame with input fields in table markup'
   const htmlString = await getHTMLFile('table_textarea.html');
 
   // Act
-  const dataFrame = toDataFrame(htmlString, defaultHeaders);
+  const dataFrame = toDataFrame(htmlString);
 
   // Assert
   expect(dataFrame).toEqual(expectedData);
@@ -82,7 +122,7 @@ test('should validate inaccurate provided header length', async () => {
 
   // Act
   try {
-    toDataFrame(htmlString, ['a', 'b']);
+    toDataFrame(htmlString, { header: ['a', 'b'] });
   } catch (error) {
     // Assert
     expect((error as Error).message).toEqual(
@@ -109,7 +149,7 @@ test('should handle when td used instead of th in header row using custom header
   const expectedWithTDs = [{ a: 'Chris', b: 'HTML tables', c: '22' }];
 
   // Act
-  const dataFrame = toDataFrame(htmlString, ['a', 'b', 'c']);
+  const dataFrame = toDataFrame(htmlString, { header: ['a', 'b', 'c'] });
 
   // Assert
   expect(dataFrame).toEqual(expectedWithTDs);
