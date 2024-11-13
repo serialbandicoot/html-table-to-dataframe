@@ -3,6 +3,7 @@ import { JSDOM } from 'jsdom';
 export type DataFrameOptions = {
   header?: string[];
   footer?: boolean;
+  locatorId?: string;
 };
 
 export interface RowData<T> {
