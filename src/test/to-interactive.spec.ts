@@ -1,6 +1,6 @@
-import { toInteractiveDataFrame } from '../table-data';
-
+import { toDataFrame, toInteractiveDataFrame } from '../table-data';
 import { getHTMLFile } from './support/utils';
+
 test('should get an interactive table', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table_interactive.html');
@@ -123,4 +123,19 @@ test('should get an interactive table', async () => {
       },
     },
   ]);
+});
+
+test('should get an interactive table', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table_interactive.html');
+
+  // Act
+  const dataFrame = toDataFrame(htmlString);
+  const expected = [
+    {"Person": 'Chris', "Likes": 'HTML tables', "Age": '22'},
+    {"Person": 'Dennis', "Likes": 'Web accessibility', "Age": '45'},
+    {"Person": 'Sarah', "Likes": 'JavaScript frameworks', "Age": '29'},
+    {"Person": 'Karen', "Likes": 'Web performance', "Age": '36'}
+]
+  expect(dataFrame).toEqual(expected)
 });
