@@ -1,5 +1,7 @@
-import { DataFrame, DataFrameOptions } from './data-frame';
-import { TableData } from './types';
+import { DataFrameOptions } from './base-frame';
+import { DataFrame } from './data-frame';
+import { InteractiveDataFrame } from './interactive-frame';
+import { LocatorID, RowData, TableData } from './types';
 
 /**
  * toDataFrame is a method, which when passed the table element via
@@ -27,8 +29,15 @@ export function toDataFrame(html: string, options?: DataFrameOptions): TableData
   const dataFrame = new DataFrame(html, options);
   dataFrame.validateHtml();
   if (options?.footer) {
-    return dataFrame.buildWithFooter();
+    return dataFrame.buildFooter();
   }
 
-  return dataFrame.build();
+  return dataFrame.buildBody();
+}
+
+export function toInteractiveDataFrame(html: string, options?: DataFrameOptions): RowData<LocatorID>[] {
+  const interactiveDataFrame = new InteractiveDataFrame(html, options);
+  interactiveDataFrame.validateHtml();
+
+  return interactiveDataFrame.build();
 }
