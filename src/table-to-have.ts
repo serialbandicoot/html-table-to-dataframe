@@ -218,9 +218,9 @@ export const toHaveColumnToMatchWhenFilteredBy = (
  */
 export type GroupType = {
   filterColumn: string;
-  filterValue: string;
+  filterValue: string | undefined;
 };
-
+ 
 /**
  * toHaveColumnToMatchGroupWhenFilteredBy uses an array of types GroupType
  * to cycle through and pass the items to toHaveColumnToMatchWhenFilteredBy.
