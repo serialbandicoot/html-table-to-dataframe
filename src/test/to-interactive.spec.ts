@@ -132,10 +132,10 @@ test('should get an interactive table', async () => {
   // Act
   const dataFrame = toDataFrame(htmlString);
   const expected = [
-    {"Person": 'Chris', "Likes": 'HTML tables', "Age": '22'},
-    {"Person": 'Dennis', "Likes": 'Web accessibility', "Age": '45'},
-    {"Person": 'Sarah', "Likes": 'JavaScript frameworks', "Age": '29'},
-    {"Person": 'Karen', "Likes": 'Web performance', "Age": '36'}
-]
-  expect(dataFrame).toEqual(expected)
+    { Person: 'Chris', Likes: 'HTML tables', Age: '22' },
+    { Person: 'Dennis', Likes: 'Web accessibility', Age: '45' },
+    { Person: 'Sarah', Likes: 'JavaScript frameworks', Age: '29' },
+    { Person: 'Karen', Likes: 'Web performance', Age: '36' },
+  ];
+  expect(dataFrame).toEqual(expected);
 });

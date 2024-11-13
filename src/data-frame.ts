@@ -19,9 +19,9 @@ export class DataFrame extends BaseDataFrame {
     const rows = rowElements.map((row) =>
       Array.from(row.querySelectorAll('td,th')).map((cell) => {
         const queryOnElements = 'input, textarea, button, select';
-        const inputElements = cell.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLButtonElement | HTMLSelectElement>(
-          queryOnElements,
-        );
+        const inputElements = cell.querySelectorAll<
+          HTMLInputElement | HTMLTextAreaElement | HTMLButtonElement | HTMLSelectElement
+        >(queryOnElements);
 
         if (inputElements.length > 0) {
           const element = inputElements[0];
@@ -37,12 +37,12 @@ export class DataFrame extends BaseDataFrame {
           }
 
           if (element instanceof this.dom.window.HTMLSelectElement) {
-            const selectedOption = inputElements[0].querySelector("option:checked") as HTMLSelectElement
+            const selectedOption = inputElements[0].querySelector('option:checked') as HTMLSelectElement;
             if (selectedOption) {
               return selectedOption.value;
             }
             // Empty
-            return ""
+            return '';
           }
         }
 
