@@ -50,8 +50,7 @@ export class InteractiveDataFrame extends BaseDataFrame {
       }
 
       return this.buildData<LocatorID>(footerCells, footerHeaders);
-    }
-    else {
+    } else {
       return this.build();
     }
   }

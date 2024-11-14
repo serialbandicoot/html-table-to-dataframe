@@ -146,7 +146,7 @@ test('should get an interactive table with footer', async () => {
 
   // Act
   const rowLocatorID = '[data-test-id="footer-row"]';
-  const dataFrame = toInteractiveDataFrame(htmlString, {footer: true, locatorId: rowLocatorID, header: ["One", "Two"]});
+  const dataFrame = toInteractiveDataFrame(htmlString, { footer: true, locatorId: rowLocatorID, header: ['One', 'Two'] });
   const expected = [
     {
       One: {
@@ -164,7 +164,7 @@ test('should get an interactive table with footer', async () => {
         },
         type: 'textarea',
       },
-    }
+    },
   ];
   expect(dataFrame).toEqual(expected);
 });
