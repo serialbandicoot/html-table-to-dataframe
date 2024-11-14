@@ -2,6 +2,60 @@ import { LocatorID } from './types';
 import { BaseDataFrame } from './base-frame';
 
 export class InteractiveDataFrame extends BaseDataFrame {
+  buildFooter() {
+    const tfoot = this.document.querySelector('table tfoot');
+    if (!tfoot) {
+      throw new Error('No <tfoot> element found in the table, but footer option is enabled.');
+    }
+
+    // Get footer headers
+    let footerHeaders = Array.from(tfoot.querySelectorAll('th')).map((th) => th.textContent?.trim() || '');
+
+    // If footerHeaders is empty, fall back to options.headers
+    if (footerHeaders.length === 0 && this.options?.header) {
+      footerHeaders = [...this.options.header]; // Use options.headers as fallback
+    }
+
+    if (this.options?.footer && this.options.locatorId) {
+      const rowElements = Array.from(this.document.querySelectorAll(this.options.locatorId));
+
+      const footerCells = rowElements.map((row) => {
+        return Array.from(row.querySelectorAll('td')).map((cell) => {
+          const queryOnElements = 'textarea, input, button, mat-select, mat-icon, mat-slide-toggle, select';
+          const control = cell.querySelector(queryOnElements);
+
+          if (control) {
+            let type = '';
+
+            // Determine the type based on the tagName
+            if (control.tagName === 'SELECT') {
+              type = 'select';
+            } else if (control.tagName === 'TEXTAREA') {
+              type = 'textarea';
+            } else if (control.tagName === 'INPUT') {
+              type = 'input';
+            }
+
+            // Use extractLocatorID to get all attributes
+            return this.extractLocatorID(control, type);
+          }
+
+          // Return a LocatorID for cells without controls
+          return this.extractLocatorID(cell, 'unknown');
+        });
+      });
+
+      if (!this.options.header) {
+        throw new Error('No Headers Provided!');
+      }
+
+      return this.buildData<LocatorID>(footerCells, footerHeaders);
+    }
+    else {
+      return this.build();
+    }
+  }
+
   build() {
     // Look for the tbody instead of the entire document
     const tbody = this.document.querySelector('tbody');

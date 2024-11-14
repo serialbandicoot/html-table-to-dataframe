@@ -139,3 +139,32 @@ test('should get an interactive table', async () => {
   ];
   expect(dataFrame).toEqual(expected);
 });
+
+test('should get an interactive table with footer', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table_interactive_footer_locator.html');
+
+  // Act
+  const rowLocatorID = '[data-test-id="footer-row"]';
+  const dataFrame = toInteractiveDataFrame(htmlString, {footer: true, locatorId: rowLocatorID, header: ["One", "Two"]});
+  const expected = [
+    {
+      One: {
+        attributes: {
+          type: 'number',
+          value: '22',
+        },
+        type: 'input',
+      },
+      Two: {
+        attributes: {
+          'data-test-id': 'likes-karen',
+          id: 'likes-4',
+          name: 'likes-4',
+        },
+        type: 'textarea',
+      },
+    }
+  ];
+  expect(dataFrame).toEqual(expected);
+});

@@ -247,3 +247,17 @@ test('should throw error when asserting column values in set for non-existent co
   // Assert
   expect(() => toHaveColumnValuesInSet(dataFrame, 'Non-existent Column', allowedLikesSet)).toThrow(expectedError);
 });
+
+test('should have checks from footer with locatorId', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table_footer_locator_row.html');
+
+  // Act
+  const rowLocatorID = '[data-test-id="footer-row"]';
+  const dataFrame = toDataFrame(htmlString, { footer: true, locatorId: rowLocatorID, header: ['One', 'Two', 'Three'] });
+
+  // Assert
+  toHaveColumnToBeValue(dataFrame, 'One', 'Bob');
+  toHaveColumnToBeValue(dataFrame, 'Two', 'Enid');
+  toHaveColumnToBeValue(dataFrame, 'Three', 'Sue');
+});

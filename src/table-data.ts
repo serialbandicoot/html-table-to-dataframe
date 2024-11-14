@@ -38,6 +38,8 @@ export function toDataFrame(html: string, options?: DataFrameOptions): TableData
 export function toInteractiveDataFrame(html: string, options?: DataFrameOptions): RowData<LocatorID>[] {
   const interactiveDataFrame = new InteractiveDataFrame(html, options);
   interactiveDataFrame.validateHtml();
-
+  if (options?.footer) {
+    return interactiveDataFrame.buildFooter();
+  }
   return interactiveDataFrame.build();
 }
