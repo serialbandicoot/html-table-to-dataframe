@@ -67,6 +67,26 @@ export class DataFrame extends BaseDataFrame {
       footerHeaders = [...this.options.header]; // Use options.headers as fallback
     }
 
+    if (this.options?.footer && this.options.locatorId) {
+      const rowElements = Array.from(this.document.querySelectorAll(this.options.locatorId));
+
+      const footerCells = rowElements.map((row) => {
+        return Array.from(row.querySelectorAll('td')).map((cell) => {
+          const queryOnElements = 'input, textarea, button';
+          const inputElements = cell.querySelectorAll<HTMLInputElement | HTMLTextAreaElement | HTMLButtonElement>(
+            queryOnElements,
+          );
+          if (inputElements && inputElements.length > 0) {
+            return inputElements[0].value;
+          } else {
+            return cell.textContent ? cell.textContent.trim() : '';
+          }
+        });
+      });
+
+      return this.buildData<string>(footerCells, footerHeaders);
+    }
+
     // Get footer cells
     const footerCells = Array.from(tfoot.querySelectorAll('tr')).map((row) =>
       Array.from(row.querySelectorAll('td')).map((cell) => {

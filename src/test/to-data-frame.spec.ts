@@ -30,6 +30,18 @@ test('should convert HTML table and use simple footer', async () => {
   expect(dataFrame).toEqual([{ 'Average age': '33' }]);
 });
 
+test('should convert HTML table and use simple footer with row locator', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table_footer_locator_row.html');
+
+  // Act
+  const rowLocatorID = '[data-test-id="footer-row"]';
+  const dataFrame = toDataFrame(htmlString, { footer: true, locatorId: rowLocatorID, header: ['One', 'Two', 'Three'] });
+
+  // Assert
+  expect(dataFrame).toEqual([{ One: 'Bob', Two: 'Enid', Three: 'Sue' }]);
+});
+
 test('should convert HTML table and use complex footer', async () => {
   // Arrange
   const htmlString = await getHTMLFile('table_footer.html');
