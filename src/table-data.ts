@@ -1,7 +1,6 @@
-import { DataFrameOptions } from './base-frame';
 import { DataFrame } from './data-frame';
 import { InteractiveDataFrame } from './interactive-frame';
-import { LocatorID, RowData, TableData } from './types';
+import { LocatorID, RowData, TableData, DataFrameOptions } from './types';
 
 /**
  * toDataFrame is a method, which when passed the table element via

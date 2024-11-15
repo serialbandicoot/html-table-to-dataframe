@@ -1,14 +1,5 @@
 import { JSDOM } from 'jsdom';
-
-export type DataFrameOptions = {
-  header?: string[];
-  footer?: boolean;
-  locatorId?: string;
-};
-
-export interface RowData<T> {
-  [key: string]: T;
-}
+import { DataFrameOptions, RowData } from './types';
 
 export class BaseDataFrame {
   readonly dom: JSDOM;
@@ -80,7 +71,7 @@ export class BaseDataFrame {
    */
   // function
 
-  cleanHeaderText(text: string): string {
+  private cleanHeaderText(text: string): string {
     return text.replace(/\s+/g, ' ').trim();
   }
 

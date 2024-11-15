@@ -14,3 +14,10 @@ export type RowData<T> = {
 };
 
 export type DataFrame = { [key: string]: LocatorID };
+
+export type DataFrameOptions = {
+  header?: string[];
+  footer?: boolean;
+  locatorId?: string;
+  testId?: string;
+};
