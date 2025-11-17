@@ -74,7 +74,7 @@ export class InteractiveDataFrame extends BaseDataFrame {
     // Focus on rows inside the tbody
     const rows = Array.from(tbody.querySelectorAll('tr')).map((row) => {
       return Array.from(row.querySelectorAll('td')).map((cell) => {
-        const queryOnElements = 'textarea, input, button, mat-select, mat-icon, mat-slide-toggle, select';
+        const queryOnElements = 'textarea, input, button, a, mat-select, mat-icon, mat-slide-toggle, select';
         const control = cell.querySelector(queryOnElements);
 
         if (control) {
@@ -87,6 +87,8 @@ export class InteractiveDataFrame extends BaseDataFrame {
             type = 'textarea';
           } else if (control.tagName === 'INPUT') {
             type = 'input';
+          } else if (control.tagName === 'A') {
+            type = 'link';
           }
 
           // Use extractLocatorID to get all attributes
