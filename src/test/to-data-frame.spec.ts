@@ -178,3 +178,30 @@ test('should handle oddities in the header names', async () => {
   // Assert
   expect(dataFrame).toEqual(expectedWithHeaderOdds);
 });
+
+test('should handle confluence', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table_confluence.html');
+
+  // Expected: keys come from the table headers exactly
+  const expected = [
+    {
+      Area: 'Homepage',
+      Task: 'Define homepage layout',
+      Description: 'Agree the main sections',
+      Priority: 'High',
+    },
+    {
+      Area: 'Homepage',
+      Task: 'Add global header',
+      Description: 'Implement header shell',
+      Priority: 'High',
+    },
+  ];
+
+  // Act
+  const dataFrame = toDataFrame(htmlString);
+
+  // Assert
+  expect(dataFrame).toEqual(expected);
+});

@@ -27,6 +27,8 @@ import { LocatorID, RowData, TableData, DataFrameOptions } from './types';
 export function toDataFrame(html: string, options?: DataFrameOptions): TableData {
   const dataFrame = new DataFrame(html, options);
   dataFrame.validateHtml();
+  dataFrame.normalizeHtml();
+
   if (options?.footer) {
     return dataFrame.buildFooter();
   }
@@ -37,6 +39,8 @@ export function toDataFrame(html: string, options?: DataFrameOptions): TableData
 export function toInteractiveDataFrame(html: string, options?: DataFrameOptions): RowData<LocatorID>[] {
   const interactiveDataFrame = new InteractiveDataFrame(html, options);
   interactiveDataFrame.validateHtml();
+  interactiveDataFrame.normalizeHtml();
+
   if (options?.footer) {
     return interactiveDataFrame.buildFooter();
   }

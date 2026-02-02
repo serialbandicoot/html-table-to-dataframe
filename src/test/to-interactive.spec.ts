@@ -40,6 +40,7 @@ test('should get an interactive table', async () => {
       Links: {
         attributes: {
           href: '#chris-1',
+          'data-testid': 'link-1',
         },
         type: 'link',
       },
@@ -74,6 +75,7 @@ test('should get an interactive table', async () => {
       Links: {
         attributes: {
           href: '#dennis-2',
+          'data-testid': 'link-2',
         },
         type: 'link',
       },
@@ -108,6 +110,7 @@ test('should get an interactive table', async () => {
       Links: {
         attributes: {
           href: '#sarah-3',
+          'data-testid': 'link-3',
         },
         type: 'link',
       },
@@ -142,6 +145,7 @@ test('should get an interactive table', async () => {
       Links: {
         attributes: {
           href: '#karen-4',
+          'data-testid': 'link-4',
         },
         type: 'link',
       },
@@ -191,6 +195,35 @@ test('should get an interactive table with footer', async () => {
   // Act
   const rowLocatorID = '[data-test-id="footer-row"]';
   const dataFrame = toInteractiveDataFrame(htmlString, { footer: true, locatorId: rowLocatorID, header: ['One', 'Two'] });
+  const expected = [
+    {
+      One: {
+        attributes: {
+          type: 'number',
+          value: '22',
+        },
+        type: 'input',
+      },
+      Two: {
+        attributes: {
+          'data-test-id': 'likes-karen',
+          id: 'likes-4',
+          name: 'likes-4',
+        },
+        type: 'textarea',
+      },
+    },
+  ];
+  expect(dataFrame).toEqual(expected);
+});
+
+test.skip('should get an interactive variant table', async () => {
+  // Arrange
+  const htmlString = await getHTMLFile('table_v.html');
+
+  // Act
+  const dataFrame = toInteractiveDataFrame(htmlString, { locatorId: "earch-results-table" });
+  dataFrame
   const expected = [
     {
       One: {

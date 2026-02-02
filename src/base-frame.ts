@@ -16,6 +16,66 @@ export class BaseDataFrame {
     this.options = options;
   }
 
+
+
+  normalizeHtml() {
+    if (!this.html || typeof this.html !== "string") {
+      return;
+    }
+
+    const TABLE_RE = /<table\b[^>]*>[\s\S]*?<\/table>/gi;
+
+    const normalizeSingleTable = (tableHtml: string): string => {
+      // If already normalized, leave it alone
+      if (/<thead\b/i.test(tableHtml) && /<tbody\b/i.test(tableHtml)) {
+        return tableHtml;
+      }
+
+      // Grab opening <table ...> tag
+      const openMatch = tableHtml.match(/<table\b[^>]*>/i);
+      if (!openMatch) return tableHtml;
+      const tableOpen = openMatch[0];
+
+      // Extract everything between <table> and </table>
+      const inner = tableHtml
+        .replace(new RegExp(`^[\\s\\S]*?${tableOpen}`, "i"), "")
+        .replace(/<\/table>[\s\S]*$/i, "");
+
+      // Extract all <tr> rows
+      const rows = inner.match(/<tr\b[^>]*>[\s\S]*?<\/tr>/gi);
+      if (!rows || rows.length === 0) {
+        return tableHtml;
+      }
+
+      const headRow = rows[0];          // first row → header
+      const bodyRows = rows.slice(1);   // rest → body
+
+      return (
+        tableOpen +
+        "<thead>" +
+        headRow +
+        "</thead>" +
+        "<tbody>" +
+        bodyRows.join("") +
+        "</tbody>" +
+        "</table>"
+      );
+    };
+
+    // Normalize every table in the HTML
+    const normalized = this.html.replace(TABLE_RE, (match) => {
+      try {
+        return normalizeSingleTable(match);
+      } catch {
+        return match;
+      }
+    });
+
+    // Update html (readonly overridden intentionally)
+    (this as any).html = normalized;
+  }
+
+
   validateHtml() {
     if (!this.html || this.html === '') {
       throw new Error('HTML cannot be empty');
@@ -31,7 +91,7 @@ export class BaseDataFrame {
    */
 
   validateHeaders(headers: string[]): void {
-    const columnCount = this.document.querySelectorAll('table thead th, , table thead td').length;
+    const columnCount = this.document.querySelectorAll('table thead th, table thead td').length;
     if (headers.length !== columnCount) {
       throw new Error(
         `The number of provided headers (${headers.length}) does not match the number of columns in the table (${columnCount}).`,
