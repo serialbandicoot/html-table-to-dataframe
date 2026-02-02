@@ -8,7 +8,7 @@ export class BaseDataFrame {
   readonly options: DataFrameOptions | undefined;
 
   constructor(
-    public readonly html: string,
+    protected html: string,
     options?: DataFrameOptions,
   ) {
     this.dom = new JSDOM(html);
@@ -16,10 +16,8 @@ export class BaseDataFrame {
     this.options = options;
   }
 
-
-
   normalizeHtml() {
-    if (!this.html || typeof this.html !== "string") {
+    if (!this.html || typeof this.html !== 'string') {
       return;
     }
 
@@ -37,9 +35,7 @@ export class BaseDataFrame {
       const tableOpen = openMatch[0];
 
       // Extract everything between <table> and </table>
-      const inner = tableHtml
-        .replace(new RegExp(`^[\\s\\S]*?${tableOpen}`, "i"), "")
-        .replace(/<\/table>[\s\S]*$/i, "");
+      const inner = tableHtml.replace(new RegExp(`^[\\s\\S]*?${tableOpen}`, 'i'), '').replace(/<\/table>[\s\S]*$/i, '');
 
       // Extract all <tr> rows
       const rows = inner.match(/<tr\b[^>]*>[\s\S]*?<\/tr>/gi);
@@ -47,19 +43,10 @@ export class BaseDataFrame {
         return tableHtml;
       }
 
-      const headRow = rows[0];          // first row → header
-      const bodyRows = rows.slice(1);   // rest → body
+      const headRow = rows[0]; // first row → header
+      const bodyRows = rows.slice(1); // rest → body
 
-      return (
-        tableOpen +
-        "<thead>" +
-        headRow +
-        "</thead>" +
-        "<tbody>" +
-        bodyRows.join("") +
-        "</tbody>" +
-        "</table>"
-      );
+      return tableOpen + '<thead>' + headRow + '</thead>' + '<tbody>' + bodyRows.join('') + '</tbody>' + '</table>';
     };
 
     // Normalize every table in the HTML
@@ -72,9 +59,8 @@ export class BaseDataFrame {
     });
 
     // Update html (readonly overridden intentionally)
-    (this as any).html = normalized;
+    this.html = normalized;
   }
-
 
   validateHtml() {
     if (!this.html || this.html === '') {

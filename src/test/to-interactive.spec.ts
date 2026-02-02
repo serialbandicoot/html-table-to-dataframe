@@ -222,8 +222,7 @@ test.skip('should get an interactive variant table', async () => {
   const htmlString = await getHTMLFile('table_v.html');
 
   // Act
-  const dataFrame = toInteractiveDataFrame(htmlString, { locatorId: "earch-results-table" });
-  dataFrame
+  const dataFrame = toInteractiveDataFrame(htmlString, { locatorId: 'earch-results-table' });
   const expected = [
     {
       One: {
