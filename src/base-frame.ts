@@ -2,8 +2,8 @@ import { JSDOM } from 'jsdom';
 import { DataFrameOptions, RowData } from './types';
 
 export class BaseDataFrame {
-  readonly dom: JSDOM;
-  readonly document: Document;
+  protected dom: JSDOM;
+  protected document: Document;
   public data: RowData<string>[] | undefined;
   readonly options: DataFrameOptions | undefined;
 
@@ -24,7 +24,7 @@ export class BaseDataFrame {
     const TABLE_RE = /<table\b[^>]*>[\s\S]*?<\/table>/gi;
 
     const normalizeSingleTable = (tableHtml: string): string => {
-      // If already normalized, leave it alone
+      // If already normalized (has thead AND tbody), leave it alone
       if (/<thead\b/i.test(tableHtml) && /<tbody\b/i.test(tableHtml)) {
         return tableHtml;
       }
@@ -35,18 +35,42 @@ export class BaseDataFrame {
       const tableOpen = openMatch[0];
 
       // Extract everything between <table> and </table>
-      const inner = tableHtml.replace(new RegExp(`^[\\s\\S]*?${tableOpen}`, 'i'), '').replace(/<\/table>[\s\S]*$/i, '');
+      let inner = tableHtml.replace(new RegExp(`^[\\s\\S]*?${tableOpen}`, "i"), "").replace(/<\/table>[\s\S]*$/i, "");
 
-      // Extract all <tr> rows
+      // Preserve <caption> if present (extract & remove from inner)
+      const captionMatch = inner.match(/<caption\b[^>]*>[\s\S]*?<\/caption>/i);
+      const captionHtml = captionMatch ? captionMatch[0] : "";
+      if (captionMatch) {
+        inner = inner.replace(captionMatch[0], "");
+      }
+
+      // Preserve <tfoot> if present (extract & remove from inner)
+      const tfootMatch = inner.match(/<tfoot\b[^>]*>[\s\S]*?<\/tfoot>/i);
+      const tfootHtml = tfootMatch ? tfootMatch[0] : "";
+      if (tfootMatch) {
+        inner = inner.replace(tfootMatch[0], "");
+      }
+
       const rows = inner.match(/<tr\b[^>]*>[\s\S]*?<\/tr>/gi);
       if (!rows || rows.length === 0) {
         return tableHtml;
       }
 
-      const headRow = rows[0]; // first row → header
-      const bodyRows = rows.slice(1); // rest → body
+      const headRow = rows[0];        
+      const bodyRows = rows.slice(1); 
 
-      return tableOpen + '<thead>' + headRow + '</thead>' + '<tbody>' + bodyRows.join('') + '</tbody>' + '</table>';
+      return (
+        tableOpen +
+        (captionHtml || "") +
+        "<thead>" +
+        headRow +
+        "</thead>" +
+        "<tbody>" +
+        bodyRows.join("") +
+        "</tbody>" +
+        (tfootHtml || "") +
+        "</table>"
+      );
     };
 
     // Normalize every table in the HTML
@@ -59,7 +83,10 @@ export class BaseDataFrame {
     });
 
     // Update html (readonly overridden intentionally)
+    console.log(normalized)
     this.html = normalized;
+    this.dom = new JSDOM(this.html);
+    this.document = this.dom.window.document;
   }
 
   validateHtml() {
