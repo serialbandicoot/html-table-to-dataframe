@@ -35,20 +35,20 @@ export class BaseDataFrame {
       const tableOpen = openMatch[0];
 
       // Extract everything between <table> and </table>
-      let inner = tableHtml.replace(new RegExp(`^[\\s\\S]*?${tableOpen}`, "i"), "").replace(/<\/table>[\s\S]*$/i, "");
+      let inner = tableHtml.replace(new RegExp(`^[\\s\\S]*?${tableOpen}`, 'i'), '').replace(/<\/table>[\s\S]*$/i, '');
 
       // Preserve <caption> if present (extract & remove from inner)
       const captionMatch = inner.match(/<caption\b[^>]*>[\s\S]*?<\/caption>/i);
-      const captionHtml = captionMatch ? captionMatch[0] : "";
+      const captionHtml = captionMatch ? captionMatch[0] : '';
       if (captionMatch) {
-        inner = inner.replace(captionMatch[0], "");
+        inner = inner.replace(captionMatch[0], '');
       }
 
       // Preserve <tfoot> if present (extract & remove from inner)
       const tfootMatch = inner.match(/<tfoot\b[^>]*>[\s\S]*?<\/tfoot>/i);
-      const tfootHtml = tfootMatch ? tfootMatch[0] : "";
+      const tfootHtml = tfootMatch ? tfootMatch[0] : '';
       if (tfootMatch) {
-        inner = inner.replace(tfootMatch[0], "");
+        inner = inner.replace(tfootMatch[0], '');
       }
 
       const rows = inner.match(/<tr\b[^>]*>[\s\S]*?<\/tr>/gi);
@@ -56,20 +56,20 @@ export class BaseDataFrame {
         return tableHtml;
       }
 
-      const headRow = rows[0];        
-      const bodyRows = rows.slice(1); 
+      const headRow = rows[0];
+      const bodyRows = rows.slice(1);
 
       return (
         tableOpen +
-        (captionHtml || "") +
-        "<thead>" +
+        (captionHtml || '') +
+        '<thead>' +
         headRow +
-        "</thead>" +
-        "<tbody>" +
-        bodyRows.join("") +
-        "</tbody>" +
-        (tfootHtml || "") +
-        "</table>"
+        '</thead>' +
+        '<tbody>' +
+        bodyRows.join('') +
+        '</tbody>' +
+        (tfootHtml || '') +
+        '</table>'
       );
     };
 
@@ -83,7 +83,7 @@ export class BaseDataFrame {
     });
 
     // Update html (readonly overridden intentionally)
-    console.log(normalized)
+    console.log(normalized);
     this.html = normalized;
     this.dom = new JSDOM(this.html);
     this.document = this.dom.window.document;
