@@ -1,5 +1,7 @@
 import { toDataFrame } from '../table-data';
+import { toDataFrameFromCSV } from '../table-from-csv';
 import { defaultHeaders, getHTMLFile } from './support/utils';
+import { join } from 'path';
 
 const expectedData = [
   { Person: 'Chris', Likes: 'HTML tables', Age: '22' },
@@ -201,6 +203,42 @@ test('should handle confluence', async () => {
 
   // Act
   const dataFrame = toDataFrame(htmlString);
+
+  // Assert
+  expect(dataFrame).toEqual(expected);
+});
+
+test('should return dataframe from CSV', async () => {
+  // Arrange
+  const filePath = join(__dirname, 'data', 'table.csv');
+
+  // Expected: keys come from the table headers exactly
+  const expected = [
+    { one: '1', two: 'A', 'thr ee': '-2', four: 'true' },
+    { one: '2', two: 'A', 'thr ee': '10.8', four: 'false' },
+    { one: '3', two: 'B', 'thr ee': '-23.2', four: 'true' },
+  ];
+
+  // Act
+  const dataFrame = toDataFrameFromCSV(filePath);
+
+  // Assert
+  expect(dataFrame).toEqual(expected);
+});
+
+test('should return dataframe from CSV with Delimiter', async () => {
+  // Arrange
+  const filePath = join(__dirname, 'data', 'table-delim-pipe.csv');
+
+  // Expected: keys come from the table headers exactly
+  const expected = [
+    { one: '1', two: 'A', 'thr ee': '-2', four: 'true' },
+    { one: '2', two: 'A', 'thr ee': '10.8', four: 'false' },
+    { one: '3', two: 'B', 'thr ee': '-23.2', four: 'true' },
+  ];
+
+  // Act
+  const dataFrame = toDataFrameFromCSV(filePath, '|');
 
   // Assert
   expect(dataFrame).toEqual(expected);
