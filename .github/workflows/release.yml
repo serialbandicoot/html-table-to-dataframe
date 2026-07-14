@@ -13,7 +13,7 @@ on:
         default: 'latest'
 
 permissions:
-  contents: read
+  contents: write
   id-token: write
 
 jobs:
@@ -24,11 +24,13 @@ jobs:
         with:
           ref: 'main'
           fetch-depth: 0
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 24
           registry-url: 'https://registry.npmjs.org'
           package-manager-cache: false
+      - name: Remove deprecated npm config
+        run: npm config delete always-auth --location=user
       - name: Git Setup
         run: |
           git config --global user.email "samtreweek@gmail.com"
