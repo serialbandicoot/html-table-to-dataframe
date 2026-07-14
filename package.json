@@ -15,7 +15,7 @@
     "lint": "eslint 'src/**/*.{ts,tsx}' --fix",
     "format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "format:check": "prettier --config .prettierrc 'src/**/*.ts' --check",
-    "release": "release-it --github.release",
+    "release": "release-it",
     "release:ci": "npm run release -- --ci --npm.skipChecks --no-git.requireCleanWorkingDir --no-github.release",
     "release:patch": "npm run release -- patch",
     "release:minor": "npm run release -- minor",
