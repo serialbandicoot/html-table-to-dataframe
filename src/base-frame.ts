@@ -83,7 +83,6 @@ export class BaseDataFrame {
     });
 
     // Update html (readonly overridden intentionally)
-    console.log(normalized);
     this.html = normalized;
     this.dom = new JSDOM(this.html);
     this.document = this.dom.window.document;
